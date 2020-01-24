@@ -186,5 +186,8 @@ CREATE SEQUENCE typeId_factory
     
 COMMIT;
 
+-- Set the timestamp to default.
+ALTER TABLE reimbursements
+MODIFY submittedOn DEFAULT LOCALTIMESTAMP;
 
 
