@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dde1118b-59ad-40af-9cb8-01beebb33029" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/reimbursement/tracker/models/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/reimbursement/tracker/models/Status.java" afterDir="false" />
-    </list>
+    <list default="true" id="dde1118b-59ad-40af-9cb8-01beebb33029" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -100,11 +96,11 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="336" y="140" key="#com.intellij.ide.util.MemberChooser" timestamp="1579835322884">
+    <state x="336" y="140" key="#com.intellij.ide.util.MemberChooser" timestamp="1579839098155">
       <screen x="0" y="23" width="1440" height="811" />
     </state>
     <state x="336" y="139" key="#com.intellij.ide.util.MemberChooser/0.23.1440.804@0.23.1440.804" timestamp="1579750473783" />
-    <state x="336" y="140" key="#com.intellij.ide.util.MemberChooser/0.23.1440.811@0.23.1440.811" timestamp="1579835322884" />
+    <state x="336" y="140" key="#com.intellij.ide.util.MemberChooser/0.23.1440.811@0.23.1440.811" timestamp="1579839098155" />
     <state width="1004" height="201" key="GridCell.Tab.0.bottom" timestamp="1579833117971">
       <screen x="0" y="23" width="1440" height="811" />
     </state>
