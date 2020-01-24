@@ -5,18 +5,18 @@ public enum Role {
     MANAGER(3, "Manager");
 
     private int roleId;
-    private String name;
+    private String roleName;
 
-    Role(int roleId, String name) {
+    Role(int roleId, String roleName) {
         this.roleId = roleId;
-        this.name = name;
+        this.roleName = roleName;
     }
 
     public int getRoleId() {
         return roleId;
     }
 
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 }
