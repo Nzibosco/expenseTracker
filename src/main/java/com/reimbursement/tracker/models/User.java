@@ -9,13 +9,13 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private Role roleId;
+    private int roleId;
 
     public User() {
         super();
     }
 
-    public User(int userId, String fname, String lname, String username, String password, String email, Role roleId) {
+    public User(int userId, String fname, String lname, String username, String password, String email, int roleId) {
         this.userId = userId;
         this.fname = fname;
         this.lname = lname;
@@ -73,11 +73,11 @@ public class User {
         this.email = email;
     }
 
-    public Role getRoleId() {
+    public int getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Role roleId) {
+    public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
 
