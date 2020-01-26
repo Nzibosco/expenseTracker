@@ -9,8 +9,8 @@ public class RequestViewHelper {
                 return "partials/login.html";
             case "/tracker/register.view":
                 return "partials/register.html";
-            case "/tracker/login/dashboard":
-                return "tracker/dashboard.html";
+            case "/tracker/dashboard.view":
+                return "partials/dashboard.html";
             default:
                 return "";
         }

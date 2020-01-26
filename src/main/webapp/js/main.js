@@ -43,16 +43,16 @@ function login() {
 
                 let user = JSON.parse(xhr.responseText);
                 console.log(user);
-                // loadDashboard();
-
+                loadDashboard()
+                setTimeout( ()=> {
+                    document.getElementById("details").innerHTML= `Welcome ${user.fname}`;
+                }, 2000);
             }
-
             if (xhr.status === 401) {
                 document.getElementById('login-failed').innerText = 'Login failed!';
             }
         }
     }
-
 }
 
 function logout() {
@@ -66,6 +66,23 @@ function logout() {
     }
 }
 
+// Load Dashboard partial and attach it to the index.html
+function loadDashboard() {
+
+    console.log('in loadDashboard()');
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'dashboard.view', true);
+    xhr.send();
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById('root').innerHTML = xhr.responseText;
+            // document.getElementById('login').addEventListener('click', login);
+        }
+    }
+
+}
+
 // function loadNav(){
 // var xhr = new XMLHttpRequest;
 // xhr.open('get', 'partials/navbar.html', true);
@@ -77,3 +94,4 @@ function logout() {
 // }
 // xhr.send();
 // }
+
