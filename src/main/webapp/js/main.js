@@ -1,7 +1,7 @@
 window.onload = () => {
     //loadNav();
     console.log('did the JS load?');
-    loadLogin();
+    //loadLogin();
     document.getElementById('logout').addEventListener('click', logout);
 }
 
