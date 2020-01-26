@@ -2,6 +2,7 @@ window.onload = () => {
     //loadNav();
     console.log('did the JS load?');
     //loadLogin();
+    document.getElementById('login').addEventListener('click', login);
     document.getElementById('logout').addEventListener('click', logout);
 }
 
@@ -47,7 +48,7 @@ function login() {
             }
 
             if (xhr.status === 401) {
-                document.getElementById('login-message').innerText = 'Login failed!';
+                document.getElementById('login-failed').innerText = 'Login failed!';
             }
         }
     }

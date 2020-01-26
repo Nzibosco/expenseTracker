@@ -43,10 +43,10 @@
     <!-- <p>This is a full stack java application to track employees expenses.</p> -->
     <!-- Button to trigger login modal -->
     <a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#login-model" role="button">Login</a>
-    <p class="lead">New user? Click <a id="login" href="#">here to register</a></p>
+    <p class="lead">New user? Click <a href="#" data-toggle="modal" data-target="#register-model" role="button">here to register</a></p>
     <!-- <small class="danger">You will be asked to supply an access code</small> -->
 
-    <!-- Modal -->
+    <!-- Login Modal -->
     <div class="modal fade" id="login-model" role="dialog" aria-labelledby="login-modelTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -70,13 +70,52 @@
                             
                         </div>
                     </form>
-                    <button type="button" class="form-control btn btn-primary text-center col-3" id="login-button" style="float: left;">Login</button>
+                    <button type="button" class="form-control btn btn-primary text-center col-3" id="login" style="float: left;">Login</button>
                 </div>
                 <p class="text-danger" id="login-failed"></p>
                 
             </div>
         </div>
     </div>
+        <!-- Register Modal -->
+        <div class="modal fade" id="register-model" role="dialog" aria-labelledby="register-modelTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="register-modelTitle">Please fill out the form below</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="padding-left: 30%;">
+                        <form>
+                            <div class="form-group">
+                            <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="fname" placeholder="First name" required>
+                            </div>
+                            <div class="form-group">
+                                <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="lname" placeholder="Last name" required>
+                            </div>
+                            <div class="form-group">
+                                <input style="border-bottom-color: black;" type="email" class="form-control-plaintext col-8" id="email" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="username" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <!-- <label for="username">Username</label> -->
+                                <input style="border-bottom-color: black;" type="password" class="form-control-plaintext col-8" id="password" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="password" placeholder="Chose role" required>
+                            </div>
+                        </form>
+                        <button type="button" class="form-control btn btn-primary text-center col-3" id="register" style="float: left;">Register</button>
+                    </div>
+                    <p class="text-danger" id="register-failed"></p>
+                    
+                </div>
+            </div>
+        </div>
 </div>
 </main>
 <script type="text/javascript" src="js/main.js"></script>
