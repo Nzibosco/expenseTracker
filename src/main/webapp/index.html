@@ -41,9 +41,42 @@
     <hr>
     <p class="lead" style="font-size: 24px;">Expense Reimbursement System (ERS) to manage the process of reimbursing employees for expenses incurred while on company time.</p>
     <!-- <p>This is a full stack java application to track employees expenses.</p> -->
-    <a class="btn btn-primary btn-lg" href="#" role="button">Login</a>
+    <!-- Button to trigger login modal -->
+    <a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#login-model" role="button">Login</a>
     <p class="lead">New user? Click <a id="login" href="#">here to register</a></p>
     <!-- <small class="danger">You will be asked to supply an access code</small> -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="login-model" role="dialog" aria-labelledby="login-modelTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="login-modelTitle">Enter Login details below</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-left: 30%;">
+                    <form>
+                        <div class="form-group">
+                            <!-- <label for="username">Username</label> -->
+                           <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-5" id="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <!-- <label for="username">Username</label> -->
+                            <input style="border-bottom-color: black;" type="password" class="form-control-plaintext col-5" id="password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            
+                        </div>
+                    </form>
+                    <button type="button" class="form-control btn btn-primary text-center col-3" id="login-button" style="float: left;">Login</button>
+                </div>
+                <p class="text-danger" id="login-failed"></p>
+                
+            </div>
+        </div>
+    </div>
 </div>
 </main>
 <script type="text/javascript" src="js/main.js"></script>

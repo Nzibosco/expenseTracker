@@ -2,3 +2,7 @@ application.properties
 expenseTracker.iml
 /target/
 /.idea
+/expenseTracker.iml
+/.classpath
+/.project
+/.settings
