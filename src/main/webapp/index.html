@@ -1,130 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </head>
-<body class="bg-secondary" style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#" style="font-weight:900; font-size: 35px; font-style: italic;">ExpsTracker</a>
 
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03" style="font-weight: 500; font-style: italic; font-size: 25px;">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Policy</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Help</a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-</nav>
-<main id="root" style="padding-top: 9%;">
-<div class="jumbotron text-center col-11 rounded" style="font-style: italic; margin: auto;">
-    <h1 class="display-4" style="font-weight: 800;">ExpsTracker</h1>
-    <hr>
-    <p class="lead" style="font-size: 24px;">Expense Reimbursement System (ERS) to manage the process of reimbursing employees for expenses incurred while on company time.</p>
-    <!-- <p>This is a full stack java application to track employees expenses.</p> -->
-    <!-- Button to trigger login modal -->
-    <a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#login-model" role="button">Login</a>
-    <p class="lead">New user? Click <a href="#" data-toggle="modal" data-target="#register-model" role="button">here to register</a></p>
-    <!-- <small class="danger">You will be asked to supply an access code</small> -->
+<body class="bg-secondary"
+    style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#" style="font-weight:900; font-size: 35px; font-style: italic;">ExpsTracker</a>
 
-    <!-- Login Modal -->
-    <div class="modal fade" id="login-model" role="dialog" aria-labelledby="login-modelTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="login-modelTitle">Enter Login details below</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="padding-left: 30%;">
-                    <form>
-                        <div class="form-group">
-                            <!-- <label for="username">Username</label> -->
-                           <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-5" id="username" placeholder="Username">
-                        </div>
-                        <div class="form-group">
-                            <!-- <label for="username">Username</label> -->
-                            <input style="border-bottom-color: black;" type="password" class="form-control-plaintext col-5" id="password" placeholder="Password">
-                        </div>
-                        <div class="form-group">
-                            
-                        </div>
-                    </form>
-                    <button type="button" class="form-control btn btn-primary text-center col-3" id="login" style="float: left;">Login</button>
-                </div>
-                <p class="text-danger" id="login-failed"></p>
-                
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03"
+            style="font-weight: 500; font-style: italic; font-size: 25px;">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Policy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Help</a>
+                </li>
+            </ul>
+            <div id="profile-info">
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
             </div>
         </div>
-    </div>
-        <!-- Register Modal -->
-        <div class="modal fade" id="register-model" role="dialog" aria-labelledby="register-modelTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="register-modelTitle">Please fill out the form below</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    </nav>
+    <main id="root" style="padding-top: 9%;">
+        <div class="jumbotron text-center col-11 rounded" style="font-style: italic; margin: auto;">
+            <h1 class="display-4" style="font-weight: 800;">ExpsTracker</h1>
+            <hr>
+            <p class="lead" style="font-size: 24px;">Expense Reimbursement System (ERS) to manage the process of
+                reimbursing employees for expenses incurred while on company time.</p>
+            <!-- <p>This is a full stack java application to track employees expenses.</p> -->
+            <!-- Button to trigger login modal -->
+            <a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#login-model"
+                role="button">Login</a>
+            <p class="lead">New user? Click <a href="#" data-toggle="modal" data-target="#register-model"
+                    role="button">here to register</a></p>
+            <!-- <small class="danger">You will be asked to supply an access code</small> -->
+
+            <!-- Login Modal -->
+            <div class="modal fade" id="login-model" role="dialog" aria-labelledby="login-modelTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="login-modelTitle">Enter Login details below</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="padding-left: 30%;">
+                            <form>
+                                <div class="form-group">
+                                    <!-- <label for="username">Username</label> -->
+                                    <input style="border-bottom-color: black;" type="text"
+                                        class="form-control-plaintext col-5" id="username" placeholder="Username">
+                                </div>
+                                <div class="form-group">
+                                    <!-- <label for="username">Username</label> -->
+                                    <input style="border-bottom-color: black;" type="password"
+                                        class="form-control-plaintext col-5" id="password" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+
+                                </div>
+                            </form>
+                            <button type="button" class="form-control btn btn-primary text-center col-3" id="login"
+                                style="float: left;">Login</button>
+                        </div>
+                        <p class="text-danger" id="login-failed"></p>
+
                     </div>
-                    <div class="modal-body" style="padding-left: 30%;">
-                        <form>
-                            <div class="form-group">
-                            <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="fname" placeholder="First name" required>
-                            </div>
-                            <div class="form-group">
-                                <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="lname" placeholder="Last name" required>
-                            </div>
-                            <div class="form-group">
-                                <input style="border-bottom-color: black;" type="email" class="form-control-plaintext col-8" id="email" placeholder="Email" required>
-                            </div>
-                            <div class="form-group">
-                                <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="username" placeholder="Username" required>
-                            </div>
-                            <div class="form-group">
-                                <!-- <label for="username">Username</label> -->
-                                <input style="border-bottom-color: black;" type="password" class="form-control-plaintext col-8" id="password" placeholder="Password" required>
-                            </div>
-                            <div class="form-group">
-                                <!-- <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="password" placeholder="Choose role" required> -->
-                                <select class="form-control-plaintext custom-select col-8" id="select-role" aria-label="select-role select with button addon" style="border-bottom-color: black; float: left;" required>
-                                    <option selected>Choose role...</option>
-                                    <option value=1>Admin</option>
-                                    <option value=2>Employee</option>
-                                    <option value=3>Manager</option>
-                                </select>
-                            </div>
-                        </form> 
-                        <br> <br>
-                        <button type="submit" class="form-control btn btn-primary text-center col-3" id="register" style="float: left;">Register</button>
+                </div>
+            </div>
+            <!-- Register Modal -->
+            <div class="modal fade" id="register-model" role="dialog" aria-labelledby="register-modelTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="register-modelTitle">Please fill out the form below</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="padding-left: 30%;">
+                            <form>
+                                <div class="form-group">
+                                    <input style="border-bottom-color: black;" type="text"
+                                        class="form-control-plaintext col-8" id="fname" placeholder="First name"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <input style="border-bottom-color: black;" type="text"
+                                        class="form-control-plaintext col-8" id="lname" placeholder="Last name"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <input style="border-bottom-color: black;" type="email"
+                                        class="form-control-plaintext col-8" id="email" placeholder="Email" required>
+                                </div>
+                                <div class="form-group">
+                                    <input style="border-bottom-color: black;" type="text"
+                                        class="form-control-plaintext col-8" id="username" placeholder="Username"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <!-- <label for="username">Username</label> -->
+                                    <input style="border-bottom-color: black;" type="password"
+                                        class="form-control-plaintext col-8" id="password" placeholder="Password"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <!-- <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="password" placeholder="Choose role" required> -->
+                                    <select class="form-control-plaintext custom-select col-8" id="select-role"
+                                        aria-label="select-role select with button addon"
+                                        style="border-bottom-color: black; float: left;" required>
+                                        <option selected>Choose role...</option>
+                                        <option value=1>Admin</option>
+                                        <option value=2>Employee</option>
+                                        <option value=3>Manager</option>
+                                    </select>
+                                </div>
+                            </form>
+                            <br> <br>
+                            <button type="submit" class="form-control btn btn-primary text-center col-3" id="register"
+                                style="float: left;">Register</button>
+                        </div>
+                        <p class="text-danger" id="register-failed"></p>
+
                     </div>
-                    <p class="text-danger" id="register-failed"></p>
-                    
                 </div>
             </div>
         </div>
-</div>
-</main>
-<script type="text/javascript" src="js/main.js"></script>
+    </main>
+    <script type="text/javascript" src="js/main.js"></script>
 </body>
+
 </html>

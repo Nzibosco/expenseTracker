@@ -1,4 +1,36 @@
-<div class="jumbotron bg-light">
-<p class="lead" id="details"></p class="lead">
+<div class="container bg-light">
+    <!--a jumbotron to display user info-->
+    <div class ="row">
+        <div class="jumbotron col-12" id="user-details">
+            <div class="row">
+                <div class="jumbotron col-3">
+                    <p id="nameField"></p>
+                </div>
+                <div class="jumbotron col-3">
+                    <p id="roleField"></p>
+                </div>
+                <div class="jumbotron col-3">
+                    <p id="reimbNumberField"></p>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="form-control btn btn-warning text-center col-3" id="register-button"></button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class ="jumbotron col-4" id="optionsDiv">
+            <ol style="list-style-type: none;">
+                <li><a href="#">Create a new reimbursement request</a></li> <br><br>
+                <li><a href="#">View submitted reimbursement requests</a></li><br><br>
+                <li><a href="#">View approved reimbursement requests</a></li><br><br>
+                <li><a href="#">View pending reimbursement requests</a></li><br><br>
+                <li><a href="#">View denied reimbursement requests</a></li><br><br>
+            </ol>
+        </div>
+        <div class = "jumbotron col-8" id="displayArea"></div>
+    </div>
+
+</div>
     
 </div>

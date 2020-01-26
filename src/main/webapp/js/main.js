@@ -94,4 +94,19 @@ function loadDashboard() {
 // }
 // xhr.send();
 // }
-
+function dashboardDisplay(fullName){
+    let profilePictureArea = document.createElement("img");
+    let fnameArea = document.createElement("p"); // clicking on this fullname will reveal a collapsible to show and edit the profile.
+    profilePictureArea.setAttribute("id", "prof-picture");
+    profilePictureArea.setAttribute("src", "https://previews.123rf.com/images/nexusby/nexusby1810/nexusby181000286/111362910-default-avatar-placeholder-profile-icon-male.jpg");
+    fnameArea.setAttribute("id", "full-name");
+    let logoutBtn = document.createElement("a");
+    logoutBtn.setAttribute("href", "#");
+    logoutBtn.setAttribute("id", "logout");
+    logoutBtn.innerHTML = "Logout";
+    let profileDiv = document.getElementById("profile-info");
+    profileDiv.append(profilePictureArea);
+    profileDiv.append(fnameArea);
+    profileDiv.append(logoutBtn);
+    fnameArea.innerHTML= fullName;
+}
