@@ -40,7 +40,8 @@ function login() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                document.getElementById("profile-info").rem
+                document.getElementById("login-model").click();
+                document.getElementById("profile-info").innerHTML = "";
                 let user = JSON.parse(xhr.responseText);
                 console.log(user);
                 dashboardDisplay(user.fname);
