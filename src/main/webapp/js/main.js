@@ -47,7 +47,9 @@ function login() {
                 dashboardDisplay(user.fname);
                 loadDashboard()
                 setTimeout( ()=> {
-                    //document.getElementById("full-name").innerHTML= `Welcome ${user.fname}`;
+                    document.getElementById("nameField").innerHTML= `Welcome ${user.fname} ${user.lname}`;
+                    document.getElementById("unameField").innerHTML= user.username;
+                    document.getElementById("reimbNumberField").innerHTML= "0";
                 }, 2000);
             }
             if (xhr.status === 401) {
