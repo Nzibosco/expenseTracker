@@ -16,7 +16,6 @@ function register() {
     console.log(roleId);
 
     let user = {
-//        userId: 0,
         fname: firstname,
         lname: lastname,
         email: e,
@@ -31,22 +30,33 @@ function register() {
     xhr.open("POST", "users", true);
     xhr.send(userJSON);
 
+    // clear the form
+    document.getElementById("fname").value = "";
+    document.getElementById("lname").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("uname").value = "";
+    document.getElementById("pw").value = "";
+    document.getElementById("select-role").options[0];
+
+
     xhr.onreadystatechange = () =>{
         if(xhr.readyState === 4){
             if(xhr.status === 200){
                 console.log(userJSON);
-                document.getElementById("register-model").innerHTML = "";
-                let callLogin = document.getElementById("register");
-                let loginModal = document.createElement("a");
-                loginModal.setAttribute("href", "#");
-                loginModal.setAttribute("data-toggle", "modal");
-                loginModal.setAttribute("data-target", "register-model");
-                loginModal.innerText = "Click to continue with login";
-                let message = document.createElement("p");
-                message.setAttribute("id", "success");
-                message.innerHTML = `Registration successful! ${loginModal}`;
-                callLogin.append(message); 
-                document.getElementById("register-model").click();
+                document.getElementById("register-success").innerHTML = "Register successfull! Continue to login!";
+//                let callLogin = document.getElementById("register");
+//                let loginModal = document.createElement("a");
+//                loginModal.setAttribute("href", "#");
+//                loginModal.setAttribute("data-toggle", "modal");
+//                loginModal.setAttribute("data-target", "register-model");
+//                loginModal.innerText = "Click to continue with login";
+//                let message = document.createElement("p");
+//                message.setAttribute("id", "success");
+//                message.innerHTML = Registration successful!;
+//                callLogin.append(message);
+//                document.getElementById("register-model").click();
+
+
                 // document.getElementById("profile-info").innerHTML = "";
                 // let user = JSON.parse(xhr.responseText);
                 // console.log(user);
@@ -61,6 +71,9 @@ function register() {
             }
             if (xhr.status === 401) {
                 document.getElementById('register-failed').innerText = 'registration failed!';
+            }
+            if(xhr.status === 409){
+                document.getElementById('register-failed').innerText = 'Username already taken!';
             }
         }
     }
