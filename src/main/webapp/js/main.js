@@ -6,21 +6,21 @@ window.onload = () => {
     document.getElementById('logout').addEventListener('click', logout);
 }
 
-function loadLogin() {
+// function loadLogin() {
 
-    console.log('in loadLogin()');
+//     console.log('in loadLogin()');
 
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'login.view', true);
-    xhr.send();
-    xhr.onreadystatechange = () => {
-        if(xhr.readyState === 4 && xhr.status === 200) {
-            document.getElementById('root').innerHTML = xhr.responseText;
-            document.getElementById('login').addEventListener('click', login);
-        }
-    }
+//     let xhr = new XMLHttpRequest();
+//     xhr.open('GET', 'login.view', true);
+//     xhr.send();
+//     xhr.onreadystatechange = () => {
+//         if(xhr.readyState === 4 && xhr.status === 200) {
+//             document.getElementById('root').innerHTML = xhr.responseText;
+//             document.getElementById('login').addEventListener('click', login);
+//         }
+//     }
 
-}
+// }
 
 function login() {
 
@@ -43,9 +43,10 @@ function login() {
 
                 let user = JSON.parse(xhr.responseText);
                 console.log(user);
+                dashboardDisplay(user.fname);
                 loadDashboard()
                 setTimeout( ()=> {
-                    document.getElementById("details").innerHTML= `Welcome ${user.fname}`;
+                    //document.getElementById("full-name").innerHTML= `Welcome ${user.fname}`;
                 }, 2000);
             }
             if (xhr.status === 401) {
