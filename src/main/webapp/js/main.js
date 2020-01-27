@@ -16,7 +16,7 @@ function register() {
     console.log(roleId);
 
     let user = {
-        userId: 0,
+//        userId: 0,
         fname: firstname,
         lname: lastname,
         email: e,
@@ -35,7 +35,7 @@ function register() {
         if(xhr.readyState === 4){
             if(xhr.status === 200){
                 console.log(userJSON);
-                document.getElementById("register").innerHTML = "";
+                document.getElementById("register-model").innerHTML = "";
                 let callLogin = document.getElementById("register");
                 let loginModal = document.createElement("a");
                 loginModal.setAttribute("href", "#");

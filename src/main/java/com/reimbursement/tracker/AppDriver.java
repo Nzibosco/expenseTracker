@@ -10,13 +10,13 @@ public class AppDriver {
     public static void main (String ... args){
         try(Connection conn = getInstance().getConnection()){
 
-            String sql = "SELECT * FROM roles";
+            String sql = "SELECT * FROM users";
             Statement pstmt = conn.createStatement();
 
             ResultSet rs = pstmt.executeQuery(sql);
             while(rs.next()){
-                System.out.println("Role id: " + rs.getInt(1));
-                System.out.println("Role name: " + rs.getString(2));
+                System.out.println("User id: " + rs.getInt(1));
+                System.out.println("email: " + rs.getString(4));
             }
 
         }catch (SQLException e){

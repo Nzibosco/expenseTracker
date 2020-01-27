@@ -9,7 +9,6 @@ public class User {
     private String email;
     private String username;
     private String password;
-
     private int roleId;
 
     public User() {
@@ -50,6 +49,14 @@ public class User {
         this.lname = lname;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -66,14 +73,6 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public int getRoleId() {
         return roleId;
     }
@@ -88,17 +87,17 @@ public class User {
         if (!(o instanceof User)) return false;
         User user = (User) o;
         return getUserId() == user.getUserId() &&
+                getRoleId() == user.getRoleId() &&
                 Objects.equals(getFname(), user.getFname()) &&
                 Objects.equals(getLname(), user.getLname()) &&
-                Objects.equals(getUsername(), user.getUsername()) &&
-                Objects.equals(getPassword(), user.getPassword()) &&
                 Objects.equals(getEmail(), user.getEmail()) &&
-                getRoleId() == user.getRoleId();
+                Objects.equals(getUsername(), user.getUsername()) &&
+                Objects.equals(getPassword(), user.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getFname(), getLname(), getUsername(), getPassword(), getEmail(), getRoleId());
+        return Objects.hash(getUserId(), getFname(), getLname(), getEmail(), getUsername(), getPassword(), getRoleId());
     }
 
     @Override
@@ -107,9 +106,9 @@ public class User {
                 "userId=" + userId +
                 ", fname='" + fname + '\'' +
                 ", lname='" + lname + '\'' +
+                ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
                 ", roleId=" + roleId +
                 '}';
     }

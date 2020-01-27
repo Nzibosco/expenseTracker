@@ -214,9 +214,9 @@ public class UserRepo implements CrudRepo<User> {
             temp.setUserId(rs.getInt("userId"));
             temp.setFname(rs.getString("fname"));
             temp.setLname(rs.getString("lname"));
+            temp.setEmail(rs.getString("email"));
             temp.setUsername(rs.getString("username"));
             temp.setPassword(rs.getString("password"));
-            temp.setEmail(rs.getString("email"));
             temp.setRoleId(rs.getInt("roleId"));
             users.add(temp);
         }
