@@ -85,9 +85,9 @@ public class UserRepo implements CrudRepo<User> {
             PreparedStatement pstmt = conn.prepareStatement(sql, new String[] {"userId"});
             pstmt.setString(1, newObj.getFname());
             pstmt.setString(2, newObj.getLname());
-            pstmt.setString(3, newObj.getUsername());
-            pstmt.setString(4, newObj.getPassword());
-            pstmt.setString(5, newObj.getEmail());
+            pstmt.setString(3, newObj.getEmail());
+            pstmt.setString(4, newObj.getUsername());
+            pstmt.setString(5, newObj.getPassword());
             pstmt.setInt(6, newObj.getRoleId());
 
             int rowsInserted = pstmt.executeUpdate();

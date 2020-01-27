@@ -1,31 +1,77 @@
 window.onload = () => {
-    //loadNav();
-    console.log('did the JS load?');
-    //loadLogin();
-    document.getElementById('login').addEventListener('click', login);
-    document.getElementById('logout').addEventListener('click', logout);
+
+    document.getElementById("login").addEventListener("click", login);
+    document.getElementById("register").addEventListener("click", register);
 }
 
-// function loadLogin() {
+// register a new user
+function register() {
+    let firstname = document.getElementById("fname").value;
+    let lastname = document.getElementById("lname").value;
+    let uname = document.getElementById("uname").value;
+    let pw = document.getElementById("pw").value;
+    let e = document.getElementById("email").value;
+    let getrole = document.getElementById("select-role");
+    let roleId = getrole.options[getrole.selectedIndex].getAttribute("value");
+    console.log(roleId);
 
-//     console.log('in loadLogin()');
+    let user = {
+        userId: 0,
+        fname: firstname,
+        lname: lastname,
+        email: e,
+        username: uname,
+        password: pw,  
+        roleId: roleId
+    }
 
-//     let xhr = new XMLHttpRequest();
-//     xhr.open('GET', 'login.view', true);
-//     xhr.send();
-//     xhr.onreadystatechange = () => {
-//         if(xhr.readyState === 4 && xhr.status === 200) {
-//             document.getElementById('root').innerHTML = xhr.responseText;
-//             document.getElementById('login').addEventListener('click', login);
-//         }
-//     }
+    let userJSON = JSON.stringify(user);
 
-// }
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "users", true);
+    xhr.send(userJSON);
+
+    xhr.onreadystatechange = () =>{
+        if(xhr.readyState === 4){
+            if(xhr.status === 200){
+                console.log(userJSON);
+                document.getElementById("register").innerHTML = "";
+                let callLogin = document.getElementById("register");
+                let loginModal = document.createElement("a");
+                loginModal.setAttribute("href", "#");
+                loginModal.setAttribute("data-toggle", "modal");
+                loginModal.setAttribute("data-target", "register-model");
+                loginModal.innerText = "Click to continue with login";
+                let message = document.createElement("p");
+                message.setAttribute("id", "success");
+                message.innerHTML = `Registration successful! ${loginModal}`;
+                callLogin.append(message); 
+                document.getElementById("register-model").click();
+                // document.getElementById("profile-info").innerHTML = "";
+                // let user = JSON.parse(xhr.responseText);
+                // console.log(user);
+                // dashboardDisplay(user.fname);
+                // loadDashboard();
+                // document.getElementById("logout").addEventListener("click", logout);
+                // setTimeout(() => {
+                //     document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
+                //     document.getElementById("unameField").innerHTML = user.username;
+                //     document.getElementById("reimbNumberField").innerHTML = "0";
+                // }, 2000);
+            }
+            if (xhr.status === 401) {
+                document.getElementById('register-failed').innerText = 'registration failed!';
+            }
+        }
+    }
+
+}
+
 
 function login() {
 
-    let username = document.getElementById('username').value;
-    let password = document.getElementById('password').value;
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
 
     let creds = {
         username: username,
@@ -37,6 +83,9 @@ function login() {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'auth', true);
     xhr.send(credJSON);
+    //clear the form field
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
@@ -45,11 +94,12 @@ function login() {
                 let user = JSON.parse(xhr.responseText);
                 console.log(user);
                 dashboardDisplay(user.fname);
-                loadDashboard()
-                setTimeout( ()=> {
-                    document.getElementById("nameField").innerHTML= user.fname + " " + user.lname;
-                    document.getElementById("unameField").innerHTML= user.username;
-                    document.getElementById("reimbNumberField").innerHTML= "0";
+                loadDashboard();
+                document.getElementById("logout").addEventListener("click", logout);
+                setTimeout(() => {
+                    document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
+                    document.getElementById("unameField").innerHTML = user.username;
+                    document.getElementById("reimbNumberField").innerHTML = "0";
                 }, 2000);
             }
             if (xhr.status === 401) {
@@ -65,10 +115,12 @@ function logout() {
     xhr.send();
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log('logout successful!')
+            console.log('logout successful!');
+            window.location.reload();
         }
     }
 }
+
 
 // Load Dashboard partial and attach it to the index.html
 function loadDashboard() {
@@ -79,7 +131,7 @@ function loadDashboard() {
     xhr.open('GET', 'dashboard.view', true);
     xhr.send();
     xhr.onreadystatechange = () => {
-        if(xhr.readyState === 4 && xhr.status === 200) {
+        if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById('root').innerHTML = xhr.responseText;
             // document.getElementById('login').addEventListener('click', login);
         }
@@ -87,18 +139,7 @@ function loadDashboard() {
 
 }
 
-// function loadNav(){
-// var xhr = new XMLHttpRequest;
-// xhr.open('get', 'partials/navbar.html', true);
-// xhr.onreadystatechange = function() {
-//     if (xhr.readyState == 4 && xhr.status == 200) { 
-//         document.getElementById("nav-area").innerHTML = xhr.responseText;
-//         console.log("navbar called!")
-//     } 
-// }
-// xhr.send();
-// }
-function dashboardDisplay(fullName){
+function dashboardDisplay(fullName) {
     let profilePictureArea = document.createElement("img");
     let fnameArea = document.createElement("p"); // clicking on this fullname will reveal a collapsible to show and edit the profile.
     profilePictureArea.setAttribute("id", "prof-picture");
@@ -114,5 +155,5 @@ function dashboardDisplay(fullName){
     profileDiv.append(profilePictureArea);
     profileDiv.append(fnameArea);
     profileDiv.append(logoutBtn);
-    fnameArea.innerHTML= fullName;
+    fnameArea.innerHTML = fullName;
 }

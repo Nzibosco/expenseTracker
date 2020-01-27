@@ -6,22 +6,23 @@ public class User {
     private int userId;
     private String fname;
     private String lname;
+    private String email;
     private String username;
     private String password;
-    private String email;
+
     private int roleId;
 
     public User() {
         super();
     }
 
-    public User(int userId, String fname, String lname, String username, String password, String email, int roleId) {
+    public User(int userId, String fname, String lname, String email, String username, String password, int roleId) {
         this.userId = userId;
         this.fname = fname;
         this.lname = lname;
+        this.email = email;
         this.username = username;
         this.password = password;
-        this.email = email;
         this.roleId = roleId;
     }
 
