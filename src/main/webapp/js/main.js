@@ -47,7 +47,7 @@ function login() {
                 dashboardDisplay(user.fname);
                 loadDashboard()
                 setTimeout( ()=> {
-                    document.getElementById("nameField").innerHTML= `Welcome ${user.fname} ${user.lname}`;
+                    document.getElementById("nameField").innerHTML= user.fname + " " + user.lname;
                     document.getElementById("unameField").innerHTML= user.username;
                     document.getElementById("reimbNumberField").innerHTML= "0";
                 }, 2000);
