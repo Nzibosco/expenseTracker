@@ -40,7 +40,7 @@ function login() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-
+                document.getElementById("profile-info").rem
                 let user = JSON.parse(xhr.responseText);
                 console.log(user);
                 dashboardDisplay(user.fname);
@@ -100,6 +100,8 @@ function dashboardDisplay(fullName){
     let fnameArea = document.createElement("p"); // clicking on this fullname will reveal a collapsible to show and edit the profile.
     profilePictureArea.setAttribute("id", "prof-picture");
     profilePictureArea.setAttribute("src", "https://previews.123rf.com/images/nexusby/nexusby1810/nexusby181000286/111362910-default-avatar-placeholder-profile-icon-male.jpg");
+    profilePictureArea.setAttribute("alt", "profile");
+    profilePictureArea.style = "width: 50px; height: 50px;"
     fnameArea.setAttribute("id", "full-name");
     let logoutBtn = document.createElement("a");
     logoutBtn.setAttribute("href", "#");
