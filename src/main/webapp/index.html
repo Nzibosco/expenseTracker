@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Tracker</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -55,6 +55,7 @@
             <p class="lead" style="font-size: 24px;">Expense Reimbursement System (ERS) to manage the process of
                 reimbursing employees for expenses incurred while on company time.</p>
             <!-- <p>This is a full stack java application to track employees expenses.</p> -->
+            
             <!-- Button to trigger login modal -->
             <a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#login-model"
                 role="button">Login</a>
@@ -108,7 +109,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body" style="padding-left: 30%;">
+                        <div class="modal-body" style="padding-left: 30%;" id="model-body">
                             <form>
                                 <div class="form-group">
                                     <input style="border-bottom-color: black;" type="text"
@@ -126,18 +127,16 @@
                                 </div>
                                 <div class="form-group">
                                     <input style="border-bottom-color: black;" type="text"
-                                        class="form-control-plaintext col-8" id="uname" placeholder="Username"
-                                        required>
+                                        class="form-control-plaintext col-8" id="uname" placeholder="Username" required>
                                 </div>
                                 <div class="form-group">
                                     <!-- <label for="username">Username</label> -->
                                     <input style="border-bottom-color: black;" type="password"
-                                        class="form-control-plaintext col-8" id="pw" placeholder="Password"
-                                        required>
+                                        class="form-control-plaintext col-8" id="pw" placeholder="Password" required>
                                 </div>
-                                <div class="form-group">
-                                    <!-- <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="password" placeholder="Choose role" required> -->
-                                    <select class="form-control-plaintext custom-select col-8" id="select-role"
+                                <!-- <div class="form-group">
+                                    <input style="border-bottom-color: black;" type="text" class="form-control-plaintext col-8" id="password" placeholder="Choose role" required> -->
+                                <!-- <select class="form-control-plaintext custom-select col-8" id="select-role"
                                         aria-label="select-role select with button addon"
                                         style="border-bottom-color: black; float: left;" required>
                                         <option>Chose...</option>
@@ -145,12 +144,12 @@
                                         <option value=2>Employee</option>
                                         <option value=3>Manager</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </form>
                             <br> <br>
                             <button type="submit" class="form-control btn btn-primary text-center col-3" id="register"
                                 style="float: left;">Register</button>
-                            <p class ="lead" id="register-success"></p>
+                            <p class="lead" id="register-success"></p>
                         </div>
                         <p class="text-danger" id="register-failed"></p>
 

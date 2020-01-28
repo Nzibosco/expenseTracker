@@ -11,17 +11,17 @@ function register() {
     let uname = document.getElementById("uname").value;
     let pw = document.getElementById("pw").value;
     let e = document.getElementById("email").value;
-    let getrole = document.getElementById("select-role");
-    let roleId = getrole.options[getrole.selectedIndex].getAttribute("value");
-    console.log(roleId);
+    // let getrole = document.getElementById("select-role");
+    // let roleId = getrole.options[getrole.selectedIndex].getAttribute("value");
+    // console.log(roleId);
 
     let user = {
         fname: firstname,
         lname: lastname,
         email: e,
         username: uname,
-        password: pw,  
-        roleId: roleId
+        password: pw,
+        roleId: 2
     }
 
     let userJSON = JSON.stringify(user);
@@ -36,43 +36,36 @@ function register() {
     document.getElementById("email").value = "";
     document.getElementById("uname").value = "";
     document.getElementById("pw").value = "";
-    document.getElementById("select-role").options[0];
+    // document.getElementById("select-role").options[0];
 
 
-    xhr.onreadystatechange = () =>{
-        if(xhr.readyState === 4){
-            if(xhr.status === 200){
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
                 console.log(userJSON);
-                document.getElementById("register-success").innerHTML = "Register successfull! Continue to login!";
-//                let callLogin = document.getElementById("register");
-//                let loginModal = document.createElement("a");
-//                loginModal.setAttribute("href", "#");
-//                loginModal.setAttribute("data-toggle", "modal");
-//                loginModal.setAttribute("data-target", "register-model");
-//                loginModal.innerText = "Click to continue with login";
-//                let message = document.createElement("p");
-//                message.setAttribute("id", "success");
-//                message.innerHTML = Registration successful!;
-//                callLogin.append(message);
-//                document.getElementById("register-model").click();
+                document.getElementById("model-body").innerHTML = "";
+                document.getElementById("register-modelTitle").innerHTML = "";
+                document.getElementById("model-body").innerHTML = "Register successfull! ";
+                let callLogin = document.getElementById("model-body");
+                let loginModal = document.createElement("a");
+                loginModal.setAttribute("href", "#");
+                loginModal.setAttribute("id", "call-login");
+                loginModal.setAttribute("data-toggle", "modal");
+                loginModal.setAttribute("data-target", "#login-model");
+                loginModal.innerText = "Click to continue with login";
+                callLogin.appendChild(loginModal);
+                document.getElementById("call-login").addEventListener("click", closeRegistermodel);
 
-
-                // document.getElementById("profile-info").innerHTML = "";
-                // let user = JSON.parse(xhr.responseText);
-                // console.log(user);
-                // dashboardDisplay(user.fname);
-                // loadDashboard();
-                // document.getElementById("logout").addEventListener("click", logout);
-                // setTimeout(() => {
-                //     document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
-                //     document.getElementById("unameField").innerHTML = user.username;
-                //     document.getElementById("reimbNumberField").innerHTML = "0";
-                // }, 2000);
+                function closeRegistermodel() {
+                    setTimeout(() => {
+                        document.getElementById("register-model").click();
+                    }, 10);
+                }
             }
             if (xhr.status === 401) {
                 document.getElementById('register-failed').innerText = 'registration failed!';
             }
-            if(xhr.status === 409){
+            if (xhr.status === 409) {
                 document.getElementById('register-failed').innerText = 'Username already taken!';
             }
         }
@@ -169,4 +162,15 @@ function dashboardDisplay(fullName) {
     profileDiv.append(fnameArea);
     profileDiv.append(logoutBtn);
     fnameArea.innerHTML = fullName;
+}
+
+document.onclick = function(event) {
+    var target = event.target || event.srcElement;
+    let elementId = target.innerHTML;
+    if(target.getAttribute("class") === "navbar-brand"){
+        console.log(elementId);
+        console.log(target.tagName);
+        console.log(target.getAttribute("class"));
+    }
+    
 }

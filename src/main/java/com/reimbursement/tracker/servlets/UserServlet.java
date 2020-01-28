@@ -67,7 +67,7 @@ public class UserServlet extends HttpServlet {
             userService.register(newUser);
             String newUserJSON = mapper.writeValueAsString(newUser);
             writer.write(newUserJSON);
-            resp.setStatus(201); // created;
+            //resp.setStatus(201); // created;
 
         } catch (MismatchedInputException e) {
             resp.setStatus(400); // bad request
