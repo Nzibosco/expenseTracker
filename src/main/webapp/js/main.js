@@ -38,7 +38,6 @@ function register() {
     document.getElementById("pw").value = "";
     // document.getElementById("select-role").options[0];
 
-
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
@@ -162,15 +161,4 @@ function dashboardDisplay(fullName) {
     profileDiv.append(fnameArea);
     profileDiv.append(logoutBtn);
     fnameArea.innerHTML = fullName;
-}
-
-document.onclick = function(event) {
-    var target = event.target || event.srcElement;
-    let elementId = target.innerHTML;
-    if(target.getAttribute("class") === "navbar-brand"){
-        console.log(elementId);
-        console.log(target.tagName);
-        console.log(target.getAttribute("class"));
-    }
-    
 }
