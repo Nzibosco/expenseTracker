@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.Set;
 
 @WebServlet("/reimbs/*")
@@ -24,7 +25,8 @@ public class ReimbServlet extends HttpServlet {
 
 
     private final ReimbServices reimbServices = new ReimbServices(new ReimbRepo());
-    private static Reimbursement r = new Reimbursement();
+    private static Reimbursement re = new Reimbursement();
+    private static Set<Reimbursement> r = new HashSet<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,24 +35,28 @@ public class ReimbServlet extends HttpServlet {
         resp.setContentType("application/json");
         String reimbIdParam = req.getParameter("reimbId");
 
+        // param to get a reimb by status
+        String reimbStatusParam = req.getParameter("reimbStatus");
+
+        // param to get a reimb by author
+        String reimbAuthParam = req.getParameter("reimbAuth");
+
+        // param to get a reimb by type
+        String reimbTypeParam = req.getParameter("reimbType");
+
         if (req.getSession(false) != null) {
             User thisUser = (User) req.getSession().getAttribute("this-user");
             System.out.println(thisUser);
         }
 
-        if (reimbIdParam == null) {
-
-            Set<Reimbursement> reimbs = reimbServices.getAllReimbs();
-            String reimbJSON = mapper.writeValueAsString(reimbs);
-            resp.getWriter().write(reimbJSON);
-
-        } else {
-
+        // get reimbs by author
+        if(reimbAuthParam != null){
             try {
-
+                // empty reimb set for previous HTTP requests
+                r.clear();
                 reimbServices.getAllReimbs().forEach(reimbursement -> {
-                    if(reimbursement.getReimbId() == Integer.parseInt(reimbIdParam)){
-                        r = reimbursement;
+                    if(reimbursement.getAuthor() == Integer.parseInt(reimbAuthParam)){
+                        r.add(reimbursement);
                     }
                 });
                 String reimbJSON = mapper.writeValueAsString(r);
@@ -59,6 +65,67 @@ public class ReimbServlet extends HttpServlet {
             } catch (Exception e) {
                 resp.setStatus(400);
             }
+        }
+        // get reimbs by status
+        else if (reimbStatusParam != null){
+
+            try {
+                // empty reimb set for previous HTTP requests
+                r.clear();
+                reimbServices.getAllReimbs().forEach(reimbursement -> {
+                    if(reimbursement.getStatusId() == Integer.parseInt(reimbStatusParam)){
+                        r.add(reimbursement);
+                    }
+                });
+                String reimbJSON = mapper.writeValueAsString(r);
+                resp.getWriter().write(reimbJSON);
+
+            } catch (Exception e) {
+                resp.setStatus(400);
+            }
+        }
+        // get reimbs by type
+        else if (reimbTypeParam != null){
+
+            try {
+                // empty reimb set for previous HTTP requests
+                r.clear();
+                reimbServices.getAllReimbs().forEach(reimbursement -> {
+                    if(reimbursement.getTypeId() == Integer.parseInt(reimbTypeParam)){
+                        r.add(reimbursement);
+                    }
+                });
+                String reimbJSON = mapper.writeValueAsString(r);
+                resp.getWriter().write(reimbJSON);
+
+            } catch (Exception e) {
+                resp.setStatus(400);
+            }
+
+        }
+        // get reimbs by id
+        else if (reimbIdParam != null){
+
+            try {
+
+                reimbServices.getAllReimbs().forEach(reimbursement -> {
+                    if(reimbursement.getReimbId() == Integer.parseInt(reimbIdParam)){
+
+                        re = reimbursement;
+                    }
+                });
+                String reimbJSON = mapper.writeValueAsString(re);
+                resp.getWriter().write(reimbJSON);
+
+            } catch (Exception e) {
+                resp.setStatus(400);
+            }
+
+        }     else {
+
+            Set<Reimbursement> reimbs = reimbServices.getAllReimbs();
+            String reimbJSON = mapper.writeValueAsString(reimbs);
+            resp.getWriter().write(reimbJSON);
 
         }
 

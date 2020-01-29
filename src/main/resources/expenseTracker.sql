@@ -208,4 +208,30 @@ END;
 --insert_reimb(250, 'Went out with friends! Hahah! Who cares!!', 1, 4);
 --END;
 
+-- A PROCEDURE TO PROCESS REIMBURSMENT REQUESTS
+CREATE OR REPLACE PROCEDURE process_reimb (reimbId IN NUMBER, decision IN VARCHAR2, resolverId IN NUMBER)
+IS
+BEGIN
+    IF
+    decision = 'Approved'
+    THEN
+    UPDATE reimbursements
+    SET resolvedOn = LOCALTIMESTAMP, resolver = resolverId, statusId = 2
+    WHERE reimbId = reimbId;
+    ELSIF
+    decision = 'Denied'
+    THEN
+    UPDATE reimbursements
+    SET resolvedOn = LOCALTIMESTAMP, resolver = resolverId, statusId = 3
+    WHERE reimbId = reimbId;
+    END IF;
+END;
+/
+
+--BEGIN
+--process_reimb(1,'Denied', 1);
+--END;
+
 COMMIT;
+
+
