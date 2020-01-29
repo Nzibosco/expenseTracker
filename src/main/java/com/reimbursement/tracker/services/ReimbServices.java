@@ -19,15 +19,14 @@ public class ReimbServices {
         this.reimbRepo = reimbRepo;
     }
 
-    public ReimbServices() {
-        super();
-    }
-
     // creating a reimbursement
     public void registerReimb(Reimbursement newReimb) {
-
         if (!isReimbValid(newReimb)) throw new InvalidRequestException();
-        newReimb.setAmount(validatedAmount(newReimb.getAmount()));
+        Double amount = validatedAmount(newReimb.getAmount());
+        System.out.println(amount);
+        Reimbursement r = newReimb;
+        r.setAmount(amount);
+
         reimbRepo.save(newReimb);
     }
 
@@ -36,14 +35,16 @@ public class ReimbServices {
         if(negativeValuesChecker(Double.valueOf(id))) return false;
         if(negativeValuesChecker(Double.valueOf(resolver))) return false;
         if(decision == null || decision.trim().equals("") || decision.trim() == null) return false;
-
-        boolean reimbProcessed = reimbRepo.processRequest(id, decision, resolver);
-
+        boolean reimbProcessed = false;
+        if(decision.equals("Denied") || decision.equals("Approved")) {
+            reimbProcessed = reimbRepo.processRequest(id, decision, resolver);
+        }
         return reimbProcessed;
     }
 
     // get all reimbursements
     public Set<Reimbursement> getAllReimbs(){
+
         Set<Reimbursement> reimbs;
 
         reimbs = reimbRepo.findAll();
@@ -54,7 +55,7 @@ public class ReimbServices {
     }
 
     // method to validate and format amount deposited or withdrawn
-    public Double validatedAmount (Double amount){
+    private Double validatedAmount (Double amount){
         if(amount.isNaN() || amount < 0) return 0.0;
 
         try{
@@ -67,14 +68,14 @@ public class ReimbServices {
         return amount;
     }
 
-    public boolean negativeValuesChecker(Double amount){
+    private boolean negativeValuesChecker(Double amount){
         if(amount <= 0){
             return true;
         }
         return false;
     }
 
-    public Boolean isReimbValid(Reimbursement reimb) {
+    private Boolean isReimbValid(Reimbursement reimb) {
         Double amount = reimb.getAmount();
         Double authorId = Double.valueOf(reimb.getAuthor());
         if (reimb == null) return false;

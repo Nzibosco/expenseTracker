@@ -18,7 +18,6 @@ public class ReimbRepo implements CrudRepo <Reimbursement> {
 
             String sql = "{CALL insert_reimb (?, ?, ?, ?)}";
 
-
             CallableStatement cstmt = conn.prepareCall(sql);
             cstmt.setDouble(1, newObj.getAmount());
             cstmt.setString(2, newObj.getDescription());
@@ -28,17 +27,7 @@ public class ReimbRepo implements CrudRepo <Reimbursement> {
             int rowsInserted = cstmt.executeUpdate();
 
             if (rowsInserted != 0) {
-
-                ResultSet rs = cstmt.getGeneratedKeys();
-
-                while (rs.next()) {
-                    newObj.setReimbId(rs.getInt(1));
-                    newObj.setSubmittedOn(rs.getString(3));
-                    newObj.setResolvedOn(rs.getString(4));
-                    newObj.setResolver(rs.getInt(8));
-                    newObj.setResolver(rs.getInt(9));
-                }
-                System.out.println(newObj);
+                System.out.println("Reimbursement requested saved!");
             }
 
         } catch (SQLException e) {
@@ -64,9 +53,7 @@ public class ReimbRepo implements CrudRepo <Reimbursement> {
             //e.printStackTrace();
             System.err.println("REQUEST DENIED. TRY AGAIN");
         }
-
         return r;
-
     }
 
     @Override

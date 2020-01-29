@@ -2,6 +2,7 @@ package com.reimbursement.tracker;
 import com.reimbursement.tracker.models.*;
 import com.reimbursement.tracker.repos.ReimbRepo;
 import com.reimbursement.tracker.repos.UserRepo;
+import com.reimbursement.tracker.services.ReimbServices;
 import com.reimbursement.tracker.services.UserService;
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
@@ -53,7 +54,22 @@ public class AppDriver {
 //            });
 //
 //            users.stream().forEach(user -> System.out.println(user.getLname()));
-            repo.processRequest(22, "Approved", 2);
+//            repo.processRequest(22, "Approved", 2);
+            ReimbServices rs = new ReimbServices(new ReimbRepo());
+            Reimbursement r = new Reimbursement();
+//            r.setAmount(149.8907);
+//            r.setDescription("That's all for today! I wanna be rich. hahah. Who cares");
+//            r.setAuthor(2);
+//            r.setTypeId(4);
+//            rs.registerReimb(r);
+
+            //rs.processReimb(26, "", 2);
+            System.out.println(rs.processReimb(26, "Approved", 2));
+            //System.out.println(repo.findAll().size());
+            //UserService us = new UserService(new UserRepo());
+            //System.out.println(us.getAllUsers().size());
+
+
 
 
         }catch (Exception e){
