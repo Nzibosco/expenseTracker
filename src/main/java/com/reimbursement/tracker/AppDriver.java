@@ -13,6 +13,7 @@ import java.util.Set;
 import static com.reimbursement.tracker.utils.ConnectionFactory.*;
 
 public class AppDriver {
+    public static Reimbursement r = new Reimbursement();
 
     public static void main (String ... args){
 //        try(Connection conn = getInstance().getConnection()){
@@ -55,8 +56,8 @@ public class AppDriver {
 //
 //            users.stream().forEach(user -> System.out.println(user.getLname()));
 //            repo.processRequest(22, "Approved", 2);
-            ReimbServices rs = new ReimbServices(new ReimbRepo());
-            Reimbursement r = new Reimbursement();
+            ReimbServices reimbServices = new ReimbServices(new ReimbRepo());
+
 //            r.setAmount(149.8907);
 //            r.setDescription("That's all for today! I wanna be rich. hahah. Who cares");
 //            r.setAuthor(2);
@@ -64,7 +65,15 @@ public class AppDriver {
 //            rs.registerReimb(r);
 
             //rs.processReimb(26, "", 2);
-            System.out.println(rs.processReimb(26, "Approved", 2));
+            reimbServices.getAllReimbs().forEach(reimbursement -> {
+                if (reimbursement.getReimbId() == Integer.parseInt("1")){
+                    Reimbursement  rb = reimbursement;
+                    r = rb;
+                    //System.out.println(r);
+                }
+            });
+            System.out.println(r);
+
             //System.out.println(repo.findAll().size());
             //UserService us = new UserService(new UserRepo());
             //System.out.println(us.getAllUsers().size());
