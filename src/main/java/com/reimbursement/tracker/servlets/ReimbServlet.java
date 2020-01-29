@@ -25,7 +25,7 @@ public class ReimbServlet extends HttpServlet {
 
 
     private final ReimbServices reimbServices = new ReimbServices(new ReimbRepo());
-    private static Reimbursement re = new Reimbursement();
+    //private static Reimbursement re = new Reimbursement();
     private static Set<Reimbursement> r = new HashSet<>();
 
     @Override
@@ -107,15 +107,17 @@ public class ReimbServlet extends HttpServlet {
         else if (reimbIdParam != null){
 
             try {
-
+                // empty reimb set for previous HTTP requests
+                r.clear();
                 reimbServices.getAllReimbs().forEach(reimbursement -> {
                     if(reimbursement.getReimbId() == Integer.parseInt(reimbIdParam)){
 
-                        re = reimbursement;
+                        r.add(reimbursement);
                     }
                 });
-                String reimbJSON = mapper.writeValueAsString(re);
-                resp.getWriter().write(reimbJSON);
+                    String reimbJSON = mapper.writeValueAsString(r);
+                    resp.getWriter().write(reimbJSON);
+
 
             } catch (Exception e) {
                 resp.setStatus(400);
