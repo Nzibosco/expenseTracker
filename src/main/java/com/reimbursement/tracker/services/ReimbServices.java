@@ -2,9 +2,7 @@ package com.reimbursement.tracker.services;
 
 import com.reimbursement.tracker.exceptions.InvalidRequestException;
 import com.reimbursement.tracker.exceptions.ResourceNotFoundException;
-import com.reimbursement.tracker.exceptions.ResourcePersistenceException;
 import com.reimbursement.tracker.models.Reimbursement;
-import com.reimbursement.tracker.models.User;
 import com.reimbursement.tracker.repos.ReimbRepo;
 
 import java.math.BigDecimal;

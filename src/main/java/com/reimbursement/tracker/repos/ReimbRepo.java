@@ -1,7 +1,6 @@
 package com.reimbursement.tracker.repos;
 
 import com.reimbursement.tracker.models.Reimbursement;
-import com.reimbursement.tracker.models.User;
 import com.reimbursement.tracker.utils.ConnectionFactory;
 
 import java.sql.*;
