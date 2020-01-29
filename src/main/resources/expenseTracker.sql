@@ -190,4 +190,22 @@ COMMIT;
 ALTER TABLE reimbursements
 MODIFY submittedOn DEFAULT LOCALTIMESTAMP;
 
+-- Set pending as default status id
+ALTER TABLE reimbursements
+MODIFY statusId DEFAULT 1;
 
+
+-- A PROCEDURE TO INSERT DATA IN REIMBURSEMENT TABLE
+CREATE OR REPLACE PROCEDURE insert_reimb (amount IN NUMBER, description IN VARCHAR2, author IN NUMBER, typeId IN NUMBER)
+IS  
+BEGIN
+    INSERT INTO reimbursements(amount, description, author, typeId)
+    VALUES(amount, description, author, typeId);   
+END;
+/
+
+--BEGIN
+--insert_reimb(250, 'Went out with friends! Hahah! Who cares!!', 1, 4);
+--END;
+
+COMMIT;

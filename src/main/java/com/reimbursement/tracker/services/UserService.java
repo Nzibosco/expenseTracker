@@ -9,7 +9,6 @@ import com.reimbursement.tracker.models.User;
 import com.reimbursement.tracker.repos.UserRepo;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class UserService {
 
@@ -78,44 +77,6 @@ public class UserService {
 
 
     }
-
-//    public SortedSet<User> sortUsers(String sortCriterion, Set<User> usersForSorting) {
-//
-//        SortedSet<User> users = new TreeSet<>(usersForSorting);
-//
-//        switch (sortCriterion.toLowerCase()) {
-//            case "username":
-//                users = users.stream()
-//                        .collect(Collectors.toCollection(() -> {
-//                            return new TreeSet<>(Comparator.comparing(User::getUsername, String::compareTo));
-//                        }));
-//                break;
-//            case "first":
-//                users = users.stream()
-//                        .collect(Collectors.toCollection(() -> {
-//                            return new TreeSet<>(Comparator.comparing(User::getFname, String::compareTo));
-//                        }));
-//                break;
-//            case "last":
-//                users = users.stream()
-//                        .collect(Collectors.toCollection(() -> {
-//                            return new TreeSet<>(Comparator.comparing(User::getLname, String::compareTo));
-//                        }));
-//                break;
-//            case "role":
-//                users = users.stream()
-//                        .collect(Collectors.toCollection(() -> {
-//                            return new TreeSet<>(Comparator.comparing(User::getRoleId, Enum::compareTo));
-//                        }));
-//                break;
-//            default:
-//                throw new InvalidRequestException();
-//
-//        }
-//
-//        return users;
-//
-//    }
 
     public User authenticate(String username, String password) {
 
