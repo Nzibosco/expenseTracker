@@ -23,11 +23,11 @@ public class ReimbServices {
         super();
     }
 
-
     // creating a reimbursement
     public void registerReimb(Reimbursement newReimb) {
 
         if (!isReimbValid(newReimb)) throw new InvalidRequestException();
+        newReimb.setAmount(validatedAmount(newReimb.getAmount()));
         reimbRepo.save(newReimb);
     }
 
@@ -52,7 +52,6 @@ public class ReimbServices {
         }
         return reimbs;
     }
-
 
     // method to validate and format amount deposited or withdrawn
     public Double validatedAmount (Double amount){
