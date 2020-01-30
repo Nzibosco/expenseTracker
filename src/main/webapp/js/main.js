@@ -169,9 +169,18 @@ function dashboardDisplay(fullName) {
 
 // reimbursement request form
 function reimbReqForm(){
-    let form = 
-
-    document.getElementById("display-area") = form;
+    document.getElementById("form-loading").innerHTML = "Loading reimbursement form ....";
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'req-form.view', true);
+    xhr.send();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById('displayArea').innerHTML = "";
+            document.getElementById('displayArea').innerHTML = xhr.responseText;
+            // document.getElementById('login').addEventListener('click', login);
+        }
+    }
+    //document.getElementById("display-area") = form;
 }
 
 

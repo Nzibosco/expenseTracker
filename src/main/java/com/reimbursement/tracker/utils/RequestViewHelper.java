@@ -11,6 +11,8 @@ public class RequestViewHelper {
                 return "partials/register.html";
             case "/tracker/dashboard.view":
                 return "partials/dashboard.html";
+            case "/tracker/req-form.view":
+                return "partials/reimb-req.html";
             default:
                 return "";
         }
