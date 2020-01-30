@@ -112,8 +112,7 @@ public class UserService {
         if (user.getFname() == null || user.getFname().trim().equals("")) return false;
         if (user.getLname() == null || user.getLname().trim().equals("")) return false;
         if (user.getUsername() == null || user.getUsername().trim().equals("")) return false;
-        if (user.getPassword() == null || user.getPassword().trim().equals("")) return false;
-        return true;
+        return user.getPassword() != null && !user.getPassword().trim().equals("");
     }
 
 }

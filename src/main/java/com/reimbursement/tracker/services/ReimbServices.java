@@ -67,10 +67,7 @@ public class ReimbServices {
     }
 
     private boolean negativeValuesChecker(Double amount){
-        if(amount <= 0){
-            return true;
-        }
-        return false;
+        return amount <= 0;
     }
 
     private Boolean isReimbValid(Reimbursement reimb) {
@@ -79,8 +76,7 @@ public class ReimbServices {
         if (reimb == null) return false;
         if (negativeValuesChecker(reimb.getAmount()) || amount == null || reimb.getDescription().trim().equals("")) return false;
         if (authorId == null) return false;
-        if (Double.valueOf(reimb.getTypeId()) == null ) return false;
-        return true;
+        return Double.valueOf(reimb.getTypeId()) != null;
     }
 
 }

@@ -41,7 +41,7 @@ public class ReimbRepo implements CrudRepo <Reimbursement> {
 
         Set<Reimbursement> r = new HashSet<>();
 
-        try (Connection conn = ConnectionFactory.getInstance().getConnection();) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             String sql = "SELECT * FROM reimbursements";
             Statement stmt = conn.createStatement();

@@ -112,7 +112,7 @@ public class UserRepo implements CrudRepo<User> {
 
         Set<User> users = new HashSet<>();
 
-        try (Connection conn = ConnectionFactory.getInstance().getConnection();) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             String sql = "SELECT * FROM users";
             Statement stmt = conn.createStatement();
@@ -132,7 +132,7 @@ public class UserRepo implements CrudRepo<User> {
 
         Optional<User> user = Optional.empty();
 
-        try (Connection conn = ConnectionFactory.getInstance().getConnection();) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             String sql = "SELECT * FROM users WHERE userId = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -154,7 +154,7 @@ public class UserRepo implements CrudRepo<User> {
 
         boolean updateSuccessful = false;
 
-        try (Connection conn = ConnectionFactory.getInstance().getConnection();) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             String sql = "UPDATE users SET username = ?, password = ?, fname = ?, lname = ? " +
                     "WHERE userId = ?";
@@ -185,7 +185,7 @@ public class UserRepo implements CrudRepo<User> {
 
         boolean deleteSuccessful = false;
 
-        try (Connection conn = ConnectionFactory.getInstance().getConnection();) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             String sql = "DELETE FROM users WHERE userId = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
