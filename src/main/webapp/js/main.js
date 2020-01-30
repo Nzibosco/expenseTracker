@@ -4,6 +4,9 @@ window.onload = () => {
     document.getElementById("register").addEventListener("click", register);
 }
 
+// global variables to be referenced later; 
+let currentUserId;
+
 // register a new user
 function register() {
     let firstname = document.getElementById("fname").value;
@@ -98,13 +101,14 @@ function login() {
                 document.getElementById("profile-info").innerHTML = "";
                 let user = JSON.parse(xhr.responseText);
                 console.log(user);
+                currentUserId = user.userId;
+                console.log(`current user id is: ${currentUserId}`);
                 dashboardDisplay(user.fname);
                 loadDashboard();
                 document.getElementById("logout").addEventListener("click", logout);
 
                 setTimeout(() => {
                 // call the function to create reimbursement request form
-                    //document.getElementById("display-area").innerHTML = "";
                     document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
                     document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
                     document.getElementById("unameField").innerHTML = user.username;
@@ -142,7 +146,7 @@ function loadDashboard() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById('root').innerHTML = xhr.responseText;
-            // document.getElementById('login').addEventListener('click', login);
+            document.getElementById('view-reimbs').addEventListener('click', getMyReimbs);
         }
     }
 
@@ -169,7 +173,8 @@ function dashboardDisplay(fullName) {
 
 // reimbursement request form
 function reimbReqForm(){
-    document.getElementById("form-loading").innerHTML = "Loading reimbursement form ....";
+    //document.getElementById("form-loading").innerHTML = "Loading reimbursement form ....";
+    document.getElementById("displayArea").innerHTML = "";
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'req-form.view', true);
     xhr.send();
@@ -177,10 +182,111 @@ function reimbReqForm(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById('displayArea').innerHTML = "";
             document.getElementById('displayArea').innerHTML = xhr.responseText;
-            // document.getElementById('login').addEventListener('click', login);
+            document.getElementById('submit-reimb-req').addEventListener('click', sendReimbReq);
+        }
+        if (xhr.status === 401) {
+            document.getElementById("displayArea").innerText = 'Not allowed to send a request';
+        }
+        if (xhr.status === 409) {
+            document.getElementById('displayArea').innerText = "Form could not be load";
         }
     }
     //document.getElementById("display-area") = form;
+}
+
+//send reimbursement request
+function sendReimbReq(){
+    let amount = document.getElementById("amount-req").value;
+    let description = document.getElementById("description-req").value;
+    let getType = document.getElementById("type-req");
+    
+    let type = getType.options[getType.selectedIndex].getAttribute("value");
+
+    let reimbCreds = {
+        amount: amount,
+        description: description,
+        author: currentUserId,
+        typeId: type
+    };
+
+    let reimbJSON = JSON.stringify(reimbCreds);
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "reimbs", true);
+    xhr.send(reimbJSON);
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(reimbJSON);
+                console.log(reimbJSON.amount);
+                document.getElementById("displayArea").innerHTML = "";
+                document.getElementById("displayArea").innerHTML = `<p>Reimbursement request successfully sent.</p>`;
+            }
+            if (xhr.status === 401) {
+                document.getElementById("displayArea").innerText = 'Request failed!';
+            }
+            if (xhr.status === 409) {
+                document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+            }
+        }
+    }
+}
+
+
+//Get all reimbursements requests with user id
+function getMyReimbs(){
+
+let xhr = new XMLHttpRequest();
+xhr.open("GET", `reimbs/?reimbAuth=${currentUserId}`, true);
+xhr.send();
+
+xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+            let response = xhr.responseText;
+            let resp = JSON.parse(response);
+            //console.log(resp);
+            document.getElementById("displayArea").innerHTML = "";
+            let displayArea = document.getElementById("displayArea");
+            let reqdetails = document.createElement("div");
+            displayArea.append(reqdetails);
+            for(let i = 0; i<resp.length; i++){
+                console.log(resp[i]);
+                let reimbHtml = document.createElement("div");
+               let reqData =  `<ol>
+                <li>Request id: ${resp[i].reimbId}</li>
+                <li>Date requested: ${resp[i].submittedOn}</li>
+                <li>Details: ${resp[i].description}</li>
+                <li>Amount: ${resp[i].amount}</li>
+                <li>Status: ${resp[i].statusId}</li>
+                </ol>`; 
+                reimbHtml.innerHTML = reqData;
+                reqdetails.append(reimbHtml);
+            }
+
+            // resp.map(request = () => {
+            //     console.log(request);
+            //    let reqData =  `<div>
+            //     <p>Request id: ${request.reimbId}</p>
+            //     <p>Date requested: ${request.submittedOn}</p>
+            //     <p>Details: ${request.description}</p>
+            //     <p>Amount: ${request.amount}</p>
+            //     <p>Status: ${request.statusId === 1 ? " Pending" : request.statusId === 2 ? "Approved": "Denied"}</p>
+            //     </div>`; 
+            //     reqdetails.append(reqData);
+            // })
+            
+        }
+        if (xhr.status === 401) {
+            document.getElementById("displayArea").innerText = 'Request failed!';
+        }
+        if (xhr.status === 409) {
+            document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+        }
+    }
+}
+
 }
 
 
