@@ -101,6 +101,9 @@ function login() {
                 dashboardDisplay(user.fname);
                 loadDashboard();
                 document.getElementById("logout").addEventListener("click", logout);
+
+                // call the function to create reimbursement request form
+                document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
                 setTimeout(() => {
                     document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
                     document.getElementById("unameField").innerHTML = user.username;
@@ -182,6 +185,4 @@ function reimbReqForm(){
     document.getElementById("display-area").appendChild(form);
 }
 
-// call the function to create reimbursement request form
-document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
 
