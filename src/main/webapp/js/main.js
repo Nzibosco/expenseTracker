@@ -102,9 +102,10 @@ function login() {
                 loadDashboard();
                 document.getElementById("logout").addEventListener("click", logout);
 
-                // call the function to create reimbursement request form
-                document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
                 setTimeout(() => {
+                // call the function to create reimbursement request form
+                    //document.getElementById("display-area").innerHTML = "";
+                    document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
                     document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
                     document.getElementById("unameField").innerHTML = user.username;
                     document.getElementById("reimbNumberField").innerHTML = "0";
@@ -169,20 +170,8 @@ function dashboardDisplay(fullName) {
 // reimbursement request form
 function reimbReqForm(){
     let form = 
-    `<div>
-    <h3>Enter reimbursement request details below</h3>
-    <label for="amount-req"> Amount: <input type= "number" placeholder= "Enter requested amount here" id= "amount-req"></label>
-    <label for ="description-req">Reason: <textarea type= "text" id="description-req" rows="5" cols="30"></textarea></label>
-    <label for ="type-req"><select><options>
-    <option value=1>Lodging</option>
-    <option value=2>Travel</option>
-    <option value=3>Food</option>
-    <option value=4>Other</option>
-    </options></select></label>
-    </div>`;
 
-    document.getElementById("display-area").innerHTML = "";
-    document.getElementById("display-area").appendChild(form);
+    document.getElementById("display-area") = form;
 }
 
 
