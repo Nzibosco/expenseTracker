@@ -254,28 +254,21 @@ xhr.onreadystatechange = () => {
             for(let i = 0; i<resp.length; i++){
                 console.log(resp[i]);
                 let reimbHtml = document.createElement("div");
-               let reqData =  `<ol>
+               let reqData =  `
+               <div class = "card">
+               <div class = "card-body">
+               <ol style = "list-style-type: none;">
                 <li>Request id: ${resp[i].reimbId}</li>
                 <li>Date requested: ${resp[i].submittedOn}</li>
                 <li>Details: ${resp[i].description}</li>
                 <li>Amount: ${resp[i].amount}</li>
-                <li>Status: ${resp[i].statusId}</li>
-                </ol>`; 
+                <li>Status: ${resp[i].statusId = 1? " Pending": resp[i].statusId = 2? "Approved": "Denied"}</li>
+                </ol>
+                </div>
+                </div>`; 
                 reimbHtml.innerHTML = reqData;
                 reqdetails.append(reimbHtml);
             }
-
-            // resp.map(request = () => {
-            //     console.log(request);
-            //    let reqData =  `<div>
-            //     <p>Request id: ${request.reimbId}</p>
-            //     <p>Date requested: ${request.submittedOn}</p>
-            //     <p>Details: ${request.description}</p>
-            //     <p>Amount: ${request.amount}</p>
-            //     <p>Status: ${request.statusId === 1 ? " Pending" : request.statusId === 2 ? "Approved": "Denied"}</p>
-            //     </div>`; 
-            //     reqdetails.append(reqData);
-            // })
             
         }
         if (xhr.status === 401) {
