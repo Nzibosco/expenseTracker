@@ -100,20 +100,21 @@ function login() {
                 document.getElementById("login-model").click();
                 document.getElementById("profile-info").innerHTML = "";
                 let user = JSON.parse(xhr.responseText);
+                let fullName = user.fname + " " + user.lname;
                 console.log(user);
                 currentUserId = user.userId;
                 console.log(`current user id is: ${currentUserId}`);
-                dashboardDisplay(user.fname);
+                dashboardDisplay(fullName);
                 loadDashboard();
                 document.getElementById("logout").addEventListener("click", logout);
 
                 setTimeout(() => {
                 // call the function to create reimbursement request form
                     document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
-                    document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
-                    document.getElementById("unameField").innerHTML = user.username;
-                    document.getElementById("reimbNumberField").innerHTML = "0";
-                }, 2000);
+                    // document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
+                    // document.getElementById("unameField").innerHTML = user.username;
+                    // document.getElementById("reimbNumberField").innerHTML = "0";
+                }, 500);
             }
             if (xhr.status === 401) {
                 document.getElementById('login-failed').innerText = 'Login failed!';
@@ -153,22 +154,16 @@ function loadDashboard() {
 }
 
 function dashboardDisplay(fullName) {
-    let profilePictureArea = document.createElement("img");
-    let fnameArea = document.createElement("p"); // clicking on this fullname will reveal a collapsible to show and edit the profile.
-    profilePictureArea.setAttribute("id", "prof-picture");
-    profilePictureArea.setAttribute("src", "https://previews.123rf.com/images/nexusby/nexusby1810/nexusby181000286/111362910-default-avatar-placeholder-profile-icon-male.jpg");
-    profilePictureArea.setAttribute("alt", "profile");
-    profilePictureArea.style = "width: 50px; height: 50px;"
-    fnameArea.setAttribute("id", "full-name");
-    let logoutBtn = document.createElement("a");
-    logoutBtn.setAttribute("href", "#");
-    logoutBtn.setAttribute("id", "logout");
-    logoutBtn.innerHTML = "Logout";
-    let profileDiv = document.getElementById("profile-info");
-    profileDiv.append(profilePictureArea);
-    profileDiv.append(fnameArea);
-    profileDiv.append(logoutBtn);
-    fnameArea.innerHTML = fullName;
+
+    let profileCorner = `<img alt= "profile" src = "https://previews.123rf.com/images/nexusby/nexusby1810/nexusby181000286/111362910-default-avatar-placeholder-profile-icon-male.jpg"
+    style = "width: 70px; height: 50px;">
+    <p>${fullName}</p>
+    <p><button class="btn btn-success" id="edit-profile">Edit your profile</button></p>
+    <a href="#" id="logout">Logout</a>
+    `;
+
+    document.getElementById("profile-info").innerHTML = profileCorner;
+
 }
 
 // reimbursement request form
@@ -255,14 +250,15 @@ xhr.onreadystatechange = () => {
                 console.log(resp[i]);
                 let reimbHtml = document.createElement("div");
                let reqData =  `
-               <div class = "card">
+               <div class = "card border-primary mb-3"">
                <div class = "card-body">
                <ol style = "list-style-type: none;">
-                <li>Request id: ${resp[i].reimbId}</li>
-                <li>Date requested: ${resp[i].submittedOn}</li>
-                <li>Details: ${resp[i].description}</li>
-                <li>Amount: ${resp[i].amount}</li>
-                <li>Status: ${resp[i].statusId = 1? " Pending": resp[i].statusId = 2? "Approved": "Denied"}</li>
+                <li><b>Request id: </b>${resp[i].reimbId}</li>
+                <li><b>Date requested: </b>${resp[i].submittedOn.substring(0, 16)}</li>
+                ${resp[i].resolvedOn != null? `<li><b>Resolved On: </b>${resp[i].resolvedOn.substring(0, 16)}</li> <li><b>Resolver Id: </b>${resp[i].resolver}</li>`:""}
+                <li><b>Details: </b>${resp[i].description}</li>
+                <li><b>Amount: </b>${resp[i].amount}</li>
+                <li><b>Status: </b><span style = "color: red">${resp[i].statusId === 1? " Pending": resp[i].statusId === 2? "Approved": "Denied"}</span></li>
                 </ol>
                 </div>
                 </div>`; 
