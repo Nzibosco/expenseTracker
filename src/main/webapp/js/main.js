@@ -6,6 +6,7 @@ window.onload = () => {
 
 // global variables to be referenced later; 
 let currentUserId;
+let currentUserRole;
 
 // register a new user
 function register() {
@@ -103,18 +104,20 @@ function login() {
                 let fullName = user.fname + " " + user.lname;
                 console.log(user);
                 currentUserId = user.userId;
-                console.log(`current user id is: ${currentUserId}`);
+                currentUserRole = user.roleId;
+                console.log(`current user id is: ${currentUserId} and the role id is: ${currentUserRole}`);
                 dashboardDisplay(fullName);
                 loadDashboard();
                 document.getElementById("logout").addEventListener("click", logout);
 
-                setTimeout(() => {
+                //setTimeout(() => {
                 // call the function to create reimbursement request form
-                    document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
-                    // document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
-                    // document.getElementById("unameField").innerHTML = user.username;
-                    // document.getElementById("reimbNumberField").innerHTML = "0";
-                }, 500);
+                // document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
+                // document.getElementById("create-reimb").innerHTML = `<strong style="font-weight:300; font-size: 35px;">+</strong> Create a new request`;
+                // document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
+                // document.getElementById("unameField").innerHTML = user.username;
+                // document.getElementById("reimbNumberField").innerHTML = "0";
+                // }, 500);
             }
             if (xhr.status === 401) {
                 document.getElementById('login-failed').innerText = 'Login failed!';
@@ -147,7 +150,53 @@ function loadDashboard() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById('root').innerHTML = xhr.responseText;
-            document.getElementById('view-reimbs').addEventListener('click', getMyReimbs);
+
+            // calling the get reimbursements method
+            // document.getElementById('view-reimbs').addEventListener('click', getReimbs);
+            // document.getElementById('view-pending').addEventListener('click', getReimbs);
+            // document.getElementById('view-approved').addEventListener('click', getReimbs);
+            // document.getElementById('view-denied').addEventListener('click', getReimbs);
+
+            // give option to send reimbursement requests to employees only. 
+            if (currentUserRole === 2) {
+                document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
+                document.getElementById("create-reimb").innerHTML = `<strong style="font-weight:300; font-size: 35px;">+</strong> Create a new request`;
+            } else {
+                document.getElementById("create-reimb").hidden = true;
+            }
+            //else{ // other users only view their own requests
+            //let reimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
+            //document.getElementById('view-reimbs').addEventListener('click', getMyReimbs(reimbQuerryString));
+            //}
+
+
+            // functions for calling the get reimbursements method
+            //function getReimbs() {
+                if (currentUserRole === 3) { // manager can view all reimb requests
+                    let reimbQuerryString = "reimbs";
+                    document.getElementById('view-reimbs').addEventListener('click', getMyReimbs(reimbQuerryString));
+
+                    //Pending status reimbs
+                    let pendingReimbQuerryString = "reimbs/?reimbStatus=1";
+                    document.getElementById('view-pending').addEventListener('click', getMyReimbs(pendingReimbQuerryString));
+
+                    //Approved status reimbs
+                    let approvedReimbQuerryString = "reimbs/?reimbStatus=2";
+                    document.getElementById('view-approved').addEventListener('click', getMyReimbs(approvedReimbQuerryString));
+
+                    //Denied status reimbs
+                    let deniedReimbQuerryString = "reimbs/?reimbStatus=3";
+                    document.getElementById('view-denied').addEventListener('click', getMyReimbs(deniedReimbQuerryString));
+                }
+                else { // other users only view their own requests
+                    let reimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
+                    document.getElementById('view-reimbs').addEventListener('click', getMyReimbs(reimbQuerryString)); // all
+                    document.getElementById('view-pending').addEventListener('click', getSortedReimbs(reimbQuerryString, "pending")); // pending
+                    document.getElementById('view-approved').addEventListener('click', getSortedReimbs(reimbQuerryString, "approved")); // approved
+                    document.getElementById('view-denied').addEventListener('click', getSortedReimbs(reimbQuerryString, "denied")); // pending
+                }
+            //}
+
         }
     }
 
@@ -167,7 +216,7 @@ function dashboardDisplay(fullName) {
 }
 
 // reimbursement request form
-function reimbReqForm(){
+function reimbReqForm() {
     //document.getElementById("form-loading").innerHTML = "Loading reimbursement form ....";
     document.getElementById("displayArea").innerHTML = "";
     let xhr = new XMLHttpRequest();
@@ -190,11 +239,11 @@ function reimbReqForm(){
 }
 
 //send reimbursement request
-function sendReimbReq(){
+function sendReimbReq() {
     let amount = document.getElementById("amount-req").value;
     let description = document.getElementById("description-req").value;
     let getType = document.getElementById("type-req");
-    
+
     let type = getType.options[getType.selectedIndex].getAttribute("value");
 
     let reimbCreds = {
@@ -230,51 +279,126 @@ function sendReimbReq(){
 
 
 //Get all reimbursements requests with user id
-function getMyReimbs(){
+/*
+Ways to get reimbs: 
+1. All reimbs (Feature available for the manager and admin roles only)
+2. Reimbs by author
+3. Reimbs by status
+4. Reimbs by type
+5. Reimbs by id
 
-let xhr = new XMLHttpRequest();
-xhr.open("GET", `reimbs/?reimbAuth=${currentUserId}`, true);
-xhr.send();
+querry string passed in the getReimbs function is responsible for specifying which type of reimbs to get
+*/
+function getMyReimbs(querryString) {
 
-xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-            let response = xhr.responseText;
-            let resp = JSON.parse(response);
-            //console.log(resp);
-            document.getElementById("displayArea").innerHTML = "";
-            let displayArea = document.getElementById("displayArea");
-            let reqdetails = document.createElement("div");
-            displayArea.append(reqdetails);
-            for(let i = 0; i<resp.length; i++){
-                console.log(resp[i]);
-                let reimbHtml = document.createElement("div");
-               let reqData =  `
-               <div class = "card border-primary mb-3"">
-               <div class = "card-body">
-               <ol style = "list-style-type: none;">
-                <li><b>Request id: </b>${resp[i].reimbId}</li>
-                <li><b>Date requested: </b>${resp[i].submittedOn.substring(0, 16)}</li>
-                ${resp[i].resolvedOn != null? `<li><b>Resolved On: </b>${resp[i].resolvedOn.substring(0, 16)}</li> <li><b>Resolver Id: </b>${resp[i].resolver}</li>`:""}
-                <li><b>Details: </b>${resp[i].description}</li>
-                <li><b>Amount: </b>${resp[i].amount}</li>
-                <li><b>Status: </b><span style = "color: red">${resp[i].statusId === 1? " Pending": resp[i].statusId === 2? "Approved": "Denied"}</span></li>
-                </ol>
-                </div>
-                </div>`; 
-                reimbHtml.innerHTML = reqData;
-                reqdetails.append(reimbHtml);
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", querryString, true);
+    xhr.send();
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let response = xhr.responseText;
+                let resp = JSON.parse(response);
+                console.log(resp);
+                displayReimbs(resp);
             }
-            
-        }
-        if (xhr.status === 401) {
-            document.getElementById("displayArea").innerText = 'Request failed!';
-        }
-        if (xhr.status === 409) {
-            document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+            if (xhr.status === 401) {
+                document.getElementById("displayArea").innerText = 'Request failed!';
+            }
+            if (xhr.status === 409) {
+                document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+            }
         }
     }
+
 }
+
+//display reimbs to the dashboard 
+function displayReimbs(resp) {
+
+    document.getElementById("displayArea").innerHTML = "";
+    let displayArea = document.getElementById("displayArea");
+    let reqdetails = document.createElement("div");
+    displayArea.append(reqdetails);
+
+    for (let i = 0; i < resp.length; i++) {
+        console.log(resp[i]);
+        let reimbHtml = document.createElement("div");
+        let reqData = `
+       <div class = "card border-primary mb-3"">
+       <div class = "card-body">
+       <ol style = "list-style-type: none;">
+        <li><b>Request id: </b>${resp[i].reimbId}</li>
+        <li><b>Date requested: </b>${resp[i].submittedOn.substring(0, 16)}</li>
+        ${resp[i].resolvedOn != null ? `<li><b>Resolved On: </b>${resp[i].resolvedOn.substring(0, 16)}</li> <li><b>Resolver Id: </b>${resp[i].resolver}</li>` : ""}
+        <li><b>Details: </b>${resp[i].description}</li>
+        <li><b>Amount: </b>${resp[i].amount}</li>
+        <li><b>Status: </b><span style = "color: red">${resp[i].statusId === 1 ? " Pending" : resp[i].statusId === 2 ? "Approved" : "Denied"}</span></li>
+        </ol>
+        ${currentUserRole === 3 && resp[i].statusId === 1 ? `<p style = "float:right;" id="buttons"><span><button id= "approve-reimb">Approve</button></span> <span><button id="deny-reimb">Deny</button></span></p>` : ""}
+        </div>
+        </div>`;
+        reimbHtml.innerHTML = reqData;
+        reqdetails.append(reimbHtml);
+    }
+
+}
+
+// sort employee specific reimbs querries 
+/* 
+- using author id to get the querries,
+- parsing the objects to displayreimb function to do the rest. 
+*/
+
+function getSortedReimbs(querryString, criteria) {
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", querryString, true);
+    xhr.send();
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let response = xhr.responseText;
+                let resp = JSON.parse(response);
+
+                if(criteria === "pending"){
+                    let resp = [];
+                    for(let i = 0; i<resp.length; i++){
+                        if(resp[i].statusId === 1){resp.push(resp[i])}
+                    }
+                console.log("in pending reimbs");
+                console.log(resp);
+                displayReimbs(resp);
+                }
+                if(criteria === "approved"){
+                    let resp = [];
+                    for(let i = 0; i<resp.length; i++){
+                        if(resp[i].statusId === 2){resp.push(resp[i])}
+                    }
+                console.log("in approved reimbs");
+                console.log(resp);
+                displayReimbs(resp);
+                }
+                if(criteria === "denied"){
+                    let resp = [];
+                    for(let i = 0; i<resp.length; i++){
+                        if(resp[i].statusId === 3){resp.push(resp[i])}
+                    }
+                console.log("in denied reimbs");
+                console.log(resp);
+                displayReimbs(resp);
+                }      
+            }
+            if (xhr.status === 401) {
+                document.getElementById("displayArea").innerText = 'Request failed!';
+            }
+            if (xhr.status === 409) {
+                document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+            }
+        }
+    }
 
 }
 
