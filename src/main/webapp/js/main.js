@@ -257,6 +257,8 @@ function sendReimbReq() {
 
     let type = getType.options[getType.selectedIndex].getAttribute("value");
 
+    if(!amount < 1 || description.trim() === null || description.trim() === "" || type === null){
+
     let reimbCreds = {
         amount: amount,
         description: description,
@@ -279,16 +281,19 @@ function sendReimbReq() {
                 document.getElementById("displayArea").innerHTML = `<p>Reimbursement request successfully sent.</p>`;
             }
             if (xhr.status === 401) {
-                document.getElementById("displayArea").innerText = 'Request failed!';
+                document.getElementById("displayArea").innerText = '<p>Request failed!</p>';
             }
             if (xhr.status === 409) {
-                document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+                document.getElementById('displayArea').innerText = '<p>Request could not be sent. Try again</p>';
             }
             if (xhr.status === 500) {
-                document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+                document.getElementById('displayArea').innerText = '<p>Request could not be sent. Try again</p>';
             }
         }
     }
+} else {
+    document.getElementById("invalid-input").innerHTML = "Invalid Input. Try again with valid input";
+}
 }
 
 
@@ -506,4 +511,6 @@ function isEmail(string){
     return check;
 }
 
+// more tasks....
+// - pop up user info when author or resolver id is clicked. 
 
