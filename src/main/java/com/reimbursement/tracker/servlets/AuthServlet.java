@@ -7,6 +7,8 @@ import com.reimbursement.tracker.exceptions.AuthenticationException;
 import com.reimbursement.tracker.models.User;
 import com.reimbursement.tracker.repos.UserRepo;
 import com.reimbursement.tracker.services.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +21,8 @@ import java.io.PrintWriter;
 
 @WebServlet("/auth")
 public class AuthServlet extends HttpServlet {
+
+    private static final Logger LOGGER = LogManager.getLogger(AuthServlet.class);
 
     public final UserService userService = new UserService(new UserRepo());
 
@@ -47,11 +51,14 @@ public class AuthServlet extends HttpServlet {
 
         } catch (MismatchedInputException e) {
             resp.setStatus(400);
+            LOGGER.warn(e.getMessage());
         } catch (AuthenticationException e) {
             resp.setStatus(401);
+            LOGGER.warn(e.getMessage());
         } catch (Exception e) {
             resp.setStatus(500);
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+            //e.printStackTrace();
         }
     }
 }

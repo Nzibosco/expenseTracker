@@ -1,29 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="warn">
-    <Properties>
-        <Property name="basePath">C:\\logs</Property>
-    </Properties>
+<Configuration status="info" strict="true" name="app-logger"
+               packages="com.reimbursement.tracker">
+<Properties>
+    <Property name="filename">logs/app.log</Property>
+</Properties>
+<Filter type="ThresholdFilter" level="trace"/>
 
-    <Appenders>
-        <RollingFile name="fileLogger" fileName="${basePath}/app-info.log" filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
-            <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
-            </PatternLayout>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
-            </Policies>
-        </RollingFile>
+<Appenders>
+    <Appender type="Console" name="STDOUT">
+        <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%t] %c{1.} - %msg%n"/>
+        <Filters>
+            <Filter type="MarkerFilter" marker="FLOW" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <Filter type="MarkerFilter" marker="EXCEPTION" onMatch="DENY" onMismatch="ACCEPT"/>
+        </Filters>
+    </Appender>
+    <Appender type="Console" name="FLOW">
+        <Layout type="PatternLayout" pattern="%C{1}.%M %m %ex%n"/><!-- class and line number -->
+        <Filters>
+            <Filter type="MarkerFilter" marker="FLOW" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+            <Filter type="MarkerFilter" marker="EXCEPTION" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Filters>
+    </Appender>
+    <Appender type="File" name="File" fileName="${filename}">
+        <Layout type="PatternLayout">
+            <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+        </Layout>
+    </Appender>
+</Appenders>
 
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
-        </Console>
-    </Appenders>
-    <Loggers>
-        <Logger name="com.howtodoinjava" level="debug" additivity="true">
-            <appender-ref ref="fileLogger" level="debug" />
-        </Logger>
-        <Root level="debug" additivity="false">
-            <appender-ref ref="console" />
-        </Root>
-    </Loggers>
+<Loggers>
+    <Logger name="org.apache.logging.log4j.test1" level="debug" additivity="false">
+        <Filter type="ThreadContextMapFilter">
+            <KeyValuePair key="test" value="123"/>
+        </Filter>
+        <AppenderRef ref="STDOUT"/>
+    </Logger>
+
+    <Logger name="org.apache.logging.log4j.test2" level="debug" additivity="false">
+        <AppenderRef ref="File"/>
+    </Logger>
+
+    <Root level="trace">
+        <AppenderRef ref="STDOUT"/>
+    </Root>
+</Loggers>
+
 </Configuration>
+
+        <!--<?xml version="1.0" encoding="UTF-8"?>-->
+        <!--<Configuration status="warn">-->
+        <!--    <Properties>-->
+        <!--        <Property name="basePath">C:\\logs</Property>-->
+        <!--    </Properties>-->
+
+        <!--    <Appenders>-->
+        <!--        <RollingFile name="fileLogger" fileName="${basePath}/app-info.log" filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">-->
+        <!--            <PatternLayout>-->
+        <!--                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>-->
+        <!--            </PatternLayout>-->
+        <!--            <Policies>-->
+        <!--                <TimeBasedTriggeringPolicy interval="1" modulate="true" />-->
+        <!--            </Policies>-->
+        <!--        </RollingFile>-->
+
+        <!--        <Console name="console" target="SYSTEM_OUT">-->
+        <!--            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />-->
+        <!--        </Console>-->
+        <!--    </Appenders>-->
+        <!--    <Loggers>-->
+        <!--        <Logger name="com.howtodoinjava" level="debug" additivity="true">-->
+        <!--            <appender-ref ref="fileLogger" level="debug" />-->
+        <!--        </Logger>-->
+        <!--        <Root level="debug" additivity="false">-->
+        <!--            <appender-ref ref="console" />-->
+        <!--        </Root>-->
+        <!--    </Loggers>-->
+        <!--</Configuration>-->
+
+
