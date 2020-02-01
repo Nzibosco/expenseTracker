@@ -21,13 +21,17 @@ function register() {
     // console.log(roleId);
 
     // input validation
-    if(firstname.trim() == "" || lastname.trim() =="" || uname== null || e.trim() =="" || pw.trim() ==""){
+    if(firstname.trim() === "" || lastname.trim() ==="" || uname=== null || e.trim() ==="" || pw.trim() ==="" || uname.trim() === ""){
+        document.getElementById('register-failed').innerText ="";
         document.getElementById('register-failed').innerText = "All form fields must be filled";
-    } else if(firstname.length < 2 || lastname < 2){
+    } else if(firstname.length < 2 || lastname.length < 2){
+        document.getElementById('register-failed').innerText = "";
         document.getElementById('register-failed').innerText =  "Names must be 2 or more characters long";
-    } else if(isNaN(firstname) == false || isNaN(lastname) == false){
+    } else if(isNaN(firstname) === false || isNaN(lastname) === false){
+        document.getElementById('register-failed').innerText ="";
         document.getElementById('register-failed').innerText = "Names should be in string format";
-    } else if(isEmail(email) == false){
+    } else if(isEmail(e) === false){
+        document.getElementById('register-failed').innerText ="";
         document.getElementById('register-failed').innerText = "Invalid email";
     } else{
 
@@ -57,6 +61,7 @@ function register() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
+                document.getElementById('register-failed').innerText ="";
                 console.log(userJSON);
                 document.getElementById("model-body").innerHTML = "";
                 document.getElementById("register-modelTitle").innerHTML = "";
@@ -78,12 +83,15 @@ function register() {
                 }
             }
             if (xhr.status === 401) {
+                document.getElementById('register-failed').innerText ="";
                 document.getElementById('register-failed').innerText = 'registration failed!';
             }
             if (xhr.status === 409) {
+                document.getElementById('register-failed').innerText ="";
                 document.getElementById('register-failed').innerText = 'Username already taken!';
             }
             if (xhr.status === 500) {
+                document.getElementById('register-failed').innerText ="";
                 document.getElementById('register-failed').innerText = 'An error occurred. Try again later';
             }
         }
@@ -257,7 +265,10 @@ function sendReimbReq() {
 
     let type = getType.options[getType.selectedIndex].getAttribute("value");
 
-    if(!amount < 1 || description.trim() === null || description.trim() === "" || type === null){
+    if(amount < 1 || description.trim() === null || description.trim() === "" || type === null || type === ""){
+
+        document.getElementById("invalid-input").innerHTML = "Invalid Input. Try again with valid input";
+    } else {
 
     let reimbCreds = {
         amount: amount,
@@ -278,21 +289,19 @@ function sendReimbReq() {
                 console.log(reimbJSON);
                 console.log(reimbJSON.amount);
                 document.getElementById("displayArea").innerHTML = "";
-                document.getElementById("displayArea").innerHTML = `<p>Reimbursement request successfully sent.</p>`;
+                document.getElementById("displayArea").innerHTML = "Reimbursement request successfully sent.";
             }
             if (xhr.status === 401) {
-                document.getElementById("displayArea").innerText = '<p>Request failed!</p>';
+                document.getElementById("displayArea").innerText = "Request failed!";
             }
             if (xhr.status === 409) {
-                document.getElementById('displayArea').innerText = '<p>Request could not be sent. Try again</p>';
+                document.getElementById('displayArea').innerText = "Request could not be sent. Try again";
             }
             if (xhr.status === 500) {
-                document.getElementById('displayArea').innerText = '<p>Request could not be sent. Try again</p>';
+                document.getElementById('displayArea').innerText = "Request could not be sent. Try again";
             }
         }
     }
-} else {
-    document.getElementById("invalid-input").innerHTML = "Invalid Input. Try again with valid input";
 }
 }
 
