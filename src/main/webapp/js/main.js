@@ -2,6 +2,7 @@ window.onload = () => {
 
     document.getElementById("login").addEventListener("click", login);
     document.getElementById("register").addEventListener("click", register);
+    
 }
 
 // global variables to be referenced later; 
@@ -18,6 +19,17 @@ function register() {
     // let getrole = document.getElementById("select-role");
     // let roleId = getrole.options[getrole.selectedIndex].getAttribute("value");
     // console.log(roleId);
+
+    // input validation
+    if(firstname.trim() == "" || lastname.trim() =="" || uname== null || e.trim() =="" || pw.trim() ==""){
+        document.getElementById('register-failed').innerText = "All form fields must be filled";
+    } else if(firstname.length < 2 || lastname < 2){
+        document.getElementById('register-failed').innerText =  "Names must be 2 or more characters long";
+    } else if(isNaN(firstname) == false || isNaN(lastname) == false){
+        document.getElementById('register-failed').innerText = "Names should be in string format";
+    } else if(isEmail(email) == false){
+        document.getElementById('register-failed').innerText = "Invalid email";
+    } else{
 
     let user = {
         fname: firstname,
@@ -71,9 +83,12 @@ function register() {
             if (xhr.status === 409) {
                 document.getElementById('register-failed').innerText = 'Username already taken!';
             }
+            if (xhr.status === 500) {
+                document.getElementById('register-failed').innerText = 'An error occurred. Try again later';
+            }
         }
     }
-
+}
 }
 
 
@@ -150,6 +165,9 @@ function login() {
             if (xhr.status === 401) {
                 document.getElementById('login-failed').innerText = 'Login failed!';
             }
+            if (xhr.status === 500) {
+                document.getElementById('login-failed').innerText = 'An error occurred. Try again later';
+            }
         }
     }
 }
@@ -224,6 +242,9 @@ function reimbReqForm() {
         if (xhr.status === 409) {
             document.getElementById('displayArea').innerText = "Form could not be loaded";
         }
+        if (xhr.status === 500) {
+            document.getElementById('displayArea').innerText = "An internal error occurred. Try again";
+        }
     }
     //document.getElementById("display-area") = form;
 }
@@ -263,6 +284,9 @@ function sendReimbReq() {
             if (xhr.status === 409) {
                 document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
             }
+            if (xhr.status === 500) {
+                document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+            }
         }
     }
 }
@@ -299,6 +323,9 @@ function getMyReimbs(querryString) {
             if (xhr.status === 409) {
                 document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
             }
+            if (xhr.status === 500) {
+                document.getElementById('displayArea').innerText = 'An error occurred. Try again';
+            }
         }
     }
 
@@ -307,6 +334,7 @@ function getMyReimbs(querryString) {
 //display reimbs to the dashboard 
 function displayReimbs(resp) {
 
+    if (resp.length === 0) { document.getElementById("displayArea").innerText = 'No match found! Try other options'; }
     document.getElementById("displayArea").innerHTML = "";
     let displayArea = document.getElementById("displayArea");
     let reqdetails = document.createElement("div");
@@ -438,35 +466,44 @@ function processReimbRequest(reimb, dec, resolver) {
 }
 
 
-function reqButtons (){
-    if(document.getElementsByClassName("Approved").length > 0){
+function reqButtons() {
+    if (document.getElementsByClassName("Approved").length > 0) {
         console.log("process reimb reqs loaded");
         let done = false;
         let approveBtn = document.getElementsByClassName("Approved");
-        for (let i = 0; i<approveBtn.length; i++){
-            approveBtn[i].addEventListener("click", function(e){
+        for (let i = 0; i < approveBtn.length; i++) {
+            approveBtn[i].addEventListener("click", function (e) {
                 e.preventDefault();
-                if(done === false){
+                if (done === false) {
                     processReimbRequest(this.getAttribute("value"), this.getAttribute("class"), currentUserId);
                     done = true;
-                } 
+                }
             })
+        }
+    }
+    if (document.getElementsByClassName("Denied").length > 0) {
+
+        let done = false;
+        let deniedBtn = document.getElementsByClassName("Denied");
+        for (let i = 0; i < deniedBtn.length; i++) {
+            deniedBtn[i].addEventListener("click", function (e) {
+                e.preventDefault();
+                if (done === false) {
+                    processReimbRequest(this.getAttribute("value"), this.getAttribute("class"), currentUserId);
+                    done = true;
+                }
+            })
+        }
     }
 }
-if(document.getElementsByClassName("Denied").length > 0){
 
-    let done = false;
-    let deniedBtn = document.getElementsByClassName("Denied");
-    for (let i = 0; i<deniedBtn.length; i++){
-        deniedBtn[i].addEventListener("click", function(e){
-            e.preventDefault();
-            if(done === false){
-                processReimbRequest(this.getAttribute("value"), this.getAttribute("class"), currentUserId);
-                done = true;
-            } 
-        })
-}
-}
+// html forms input validation
+// validating email
+function isEmail(string){
+    let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    let email = string;
+    let check = mailformat.test(email);
+    return check;
 }
 
 
