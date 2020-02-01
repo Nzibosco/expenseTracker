@@ -109,59 +109,42 @@ function login() {
                 dashboardDisplay(fullName);
                 loadDashboard();
                 document.getElementById("logout").addEventListener("click", logout);
-             
+
 
                 setTimeout(() => {
-                // call the function to create reimbursement request form
-                // document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
-                // document.getElementById("create-reimb").innerHTML = `<strong style="font-weight:300; font-size: 35px;">+</strong> Create a new request`;
-                // document.getElementById("nameField").innerHTML = user.fname + " " + user.lname;
-                // document.getElementById("unameField").innerHTML = user.username;
-                // document.getElementById("reimbNumberField").innerHTML = "0";
-                // }, 500);
+                    let reimbQuerryString = "reimbs";
+                    let userReimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
+                    document.getElementById('view-reimbs').addEventListener('click', function () {
+                        allReimbs(reimbQuerryString, userReimbQuerryString);
+                    });
 
+                    //Pending status reimbs
+                    let pendingReimbQuerryString = "reimbs/?reimbStatus=1";
+                    document.getElementById('view-pending').addEventListener('click', function () {
+                        querryReimbs(pendingReimbQuerryString, userReimbQuerryString, "pending")
+                    });
 
-                let reimbQuerryString = "reimbs";
-                let userReimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
-                document.getElementById('view-reimbs').addEventListener('click', function (){
-                    allReimbs(reimbQuerryString, userReimbQuerryString);
-                });
+                    //Approved status reimbs
+                    let approvedReimbQuerryString = "reimbs/?reimbStatus=2";
+                    document.getElementById('view-approved').addEventListener('click', function () {
+                        querryReimbs(approvedReimbQuerryString, userReimbQuerryString, "approved")
+                    });
 
-                //Pending status reimbs
-                let pendingReimbQuerryString = "reimbs/?reimbStatus=1";
-                document.getElementById('view-pending').addEventListener('click', function(){
-                    querryReimbs(pendingReimbQuerryString, userReimbQuerryString, "pending")
-                });
+                    //Denied status reimbs
+                    let deniedReimbQuerryString = "reimbs/?reimbStatus=3";
+                    document.getElementById('view-denied').addEventListener('click', function () {
+                        querryReimbs(deniedReimbQuerryString, userReimbQuerryString, "denied")
+                    });
+                }, 500);
 
-                //Approved status reimbs
-                let approvedReimbQuerryString = "reimbs/?reimbStatus=2";
-                document.getElementById('view-approved').addEventListener('click', function(){
-                    querryReimbs(approvedReimbQuerryString, userReimbQuerryString, "approved")
-                });
+                function allReimbs(managerSpec, userSpec) {
+                    if (currentUserRole == 3) { getMyReimbs(managerSpec) } else { getMyReimbs(userSpec) }
+                }
 
-                //Denied status reimbs
-                let deniedReimbQuerryString = "reimbs/?reimbStatus=3";
-                document.getElementById('view-denied').addEventListener('click', function(){
-                    querryReimbs(deniedReimbQuerryString, userReimbQuerryString, "denied")
-                });
-           // }
-        }, 500);
-            //else { // other users only view their own requests
-                // let userReimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
-                // document.getElementById('view-reimbs').addEventListener('click', getMyReimbs(reimbQuerryString)); // all
-                // document.getElementById('view-pending').addEventListener('click', getSortedReimbs(reimbQuerryString, "pending")); // pending
-                // document.getElementById('view-approved').addEventListener('click', getSortedReimbs(reimbQuerryString, "approved")); // approved
-                // document.getElementById('view-denied').addEventListener('click', getSortedReimbs(reimbQuerryString, "denied")); // pending
-            //}
-        //}
+                function querryReimbs(managerSpec, userSpec, criteria) {
+                    if (currentUserRole === 3) { getMyReimbs(managerSpec) } else { getSortedReimbs(userSpec, criteria) }
+                }
 
-        function allReimbs(managerSpec, userSpec){
-            if(currentUserRole == 3){getMyReimbs(managerSpec)} else {getMyReimbs(userSpec)}
-        }
-
-        function querryReimbs(managerSpec, userSpec, criteria){
-            if(currentUserRole === 3){getMyReimbs(managerSpec)} else{getSortedReimbs(userSpec, criteria)}
-        }
 
             }
             if (xhr.status === 401) {
@@ -196,12 +179,6 @@ function loadDashboard() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById('root').innerHTML = xhr.responseText;
 
-            // calling the get reimbursements method
-            // document.getElementById('view-reimbs').addEventListener('click', getReimbs);
-            // document.getElementById('view-pending').addEventListener('click', getReimbs);
-            // document.getElementById('view-approved').addEventListener('click', getReimbs);
-            // document.getElementById('view-denied').addEventListener('click', getReimbs);
-
             // give option to send reimbursement requests to employees only. 
             if (currentUserRole === 2) {
                 document.getElementById("create-reimb").addEventListener("click", reimbReqForm);
@@ -209,48 +186,6 @@ function loadDashboard() {
             } else {
                 document.getElementById("create-reimb").hidden = true;
             }
-            //else{ // other users only view their own requests
-            //let reimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
-            //document.getElementById('view-reimbs').addEventListener('click', getMyReimbs(reimbQuerryString));
-            //}
-
-
-            // functions for calling the get reimbursements method
-            //function getReimbs() {
-                //if (currentUserRole === 3) { // manager can view all reimb requests
-            //         let reimbQuerryString = "reimbs";
-            //         let userReimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
-            //         document.getElementById('view-reimbs').addEventListener('click', allReimbs(reimbQuerryString, userReimbQuerryString));
-
-            //         //Pending status reimbs
-            //         let pendingReimbQuerryString = "reimbs/?reimbStatus=1";
-            //         document.getElementById('view-pending').addEventListener('click', querryReimbs(pendingReimbQuerryString, userReimbQuerryString, "pending"));
-
-            //         //Approved status reimbs
-            //         let approvedReimbQuerryString = "reimbs/?reimbStatus=2";
-            //         document.getElementById('view-approved').addEventListener('click', querryReimbs(approvedReimbQuerryString, userReimbQuerryString, "approved"));
-
-            //         //Denied status reimbs
-            //         let deniedReimbQuerryString = "reimbs/?reimbStatus=3";
-            //         document.getElementById('view-denied').addEventListener('click', querryReimbs(deniedReimbQuerryString, userReimbQuerryString, "denied"));
-            //    // }
-            //     //else { // other users only view their own requests
-            //         // let userReimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
-            //         // document.getElementById('view-reimbs').addEventListener('click', getMyReimbs(reimbQuerryString)); // all
-            //         // document.getElementById('view-pending').addEventListener('click', getSortedReimbs(reimbQuerryString, "pending")); // pending
-            //         // document.getElementById('view-approved').addEventListener('click', getSortedReimbs(reimbQuerryString, "approved")); // approved
-            //         // document.getElementById('view-denied').addEventListener('click', getSortedReimbs(reimbQuerryString, "denied")); // pending
-            //     //}
-            // //}
-
-            // function allReimbs(managerSpec, userSpec){
-            //     if(currentUserRole == 3){getMyReimbs(managerSpec)} else {getMyReimbs(userSpec)}
-            // }
-
-            // function querryReimbs(managerSpec, userSpec, criteria){
-            //     if(currentUserRole === 3){getMyReimbs(managerSpec)} else{getSortedReimbs(userSpec, criteria)}
-            // }
-
 
         }
     }
@@ -287,7 +222,7 @@ function reimbReqForm() {
             document.getElementById("displayArea").innerText = 'Not allowed to send a request';
         }
         if (xhr.status === 409) {
-            document.getElementById('displayArea').innerText = "Form could not be load";
+            document.getElementById('displayArea').innerText = "Form could not be loaded";
         }
     }
     //document.getElementById("display-area") = form;
@@ -391,12 +326,15 @@ function displayReimbs(resp) {
         <li><b>Amount: </b>${resp[i].amount}</li>
         <li><b>Status: </b><span style = "color: red">${resp[i].statusId === 1 ? " Pending" : resp[i].statusId === 2 ? "Approved" : "Denied"}</span></li>
         </ol>
-        ${currentUserRole === 3 && resp[i].statusId === 1 ? `<p style = "float:right;" id="buttons"><span><button id= "approve-reimb">Approve</button></span> <span><button id="deny-reimb">Deny</button></span></p>` : ""}
+        ${currentUserRole === 3 && resp[i].statusId === 1 ? `<p style = "float:right;" class="buttons"><span><button class= "Approved" value= ${resp[i].reimbId}>Approve</button></span> 
+        <span><button class="Denied" value= ${resp[i].reimbId}>Deny</button></span></p>` : ""}
         </div>
         </div>`;
         reimbHtml.innerHTML = reqData;
         reqdetails.append(reimbHtml);
     }
+    reqButtons();
+
 
 }
 
@@ -419,34 +357,34 @@ function getSortedReimbs(querryString, criteria) {
                 let resp = JSON.parse(response);
                 let r = []
 
-                if(criteria === "pending"){
+                if (criteria === "pending") {
                     //let resp = [];
-                    for(let i = 0; i<resp.length; i++){
-                        if(resp[i].statusId === 1){r.push(resp[i])}
+                    for (let i = 0; i < resp.length; i++) {
+                        if (resp[i].statusId === 1) { r.push(resp[i]) }
                     }
-                console.log("in pending reimbs");
-                console.log(r);
-                displayReimbs(r);
+                    console.log("in pending reimbs");
+                    console.log(r);
+                    displayReimbs(r);
                 }
-                if(criteria === "approved"){
+                if (criteria === "approved") {
                     //let resp = [];
-                    for(let i = 0; i<resp.length; i++){
-                        if(resp[i].statusId === 2){r.push(resp[i])}
+                    for (let i = 0; i < resp.length; i++) {
+                        if (resp[i].statusId === 2) { r.push(resp[i]) }
                     }
-                console.log("in approved reimbs");
-                console.log(r);
-                displayReimbs(r);
+                    console.log("in approved reimbs");
+                    console.log(r);
+                    displayReimbs(r);
                 }
-                if(criteria === "denied"){
+                if (criteria === "denied") {
                     //let resp = [];
-                    for(let i = 0; i<resp.length; i++){
-                        if(resp[i].statusId === 3){r.push(resp[i])}
+                    for (let i = 0; i < resp.length; i++) {
+                        if (resp[i].statusId === 3) { r.push(resp[i]) }
                     }
-                console.log("in denied reimbs");
-                console.log(r);
-                displayReimbs(r);
+                    console.log("in denied reimbs");
+                    console.log(r);
+                    displayReimbs(r);
                 }
-                if(r.length === 0){ document.getElementById("displayArea").innerText = 'No match found failed!';}
+                if (r.length === 0) { document.getElementById("displayArea").innerText = 'No match found! Try other options'; }
             }
             if (xhr.status === 401) {
                 document.getElementById("displayArea").innerText = 'Request failed!';
@@ -457,6 +395,78 @@ function getSortedReimbs(querryString, criteria) {
         }
     }
 
+}
+
+// approve or deny reimbs
+function processReimbRequest(reimb, dec, resolver) {
+
+    //if(currentUserId != 3){return "unauthorised action"}
+    console.log("processReimbRequest function called");
+    let reimbUpdates = {
+        reimbId: reimb,
+        decision: dec,
+        resolverId: resolver
+    }
+
+    let reimbUpdatesJSON = JSON.stringify(reimbUpdates);
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", "reimbs", true);
+    xhr.send(reimbUpdatesJSON);
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let response = xhr.responseText;
+                let resp = JSON.parse(response);
+                console.log(resp);
+                // on success, call the remaining pending reqs to continue taking actions
+                getMyReimbs("reimbs/?reimbStatus=1");
+
+                // document.getElementById("displayArea").innerHTML = "";
+                // document.getElementById("displayArea").innerHTML = `<p>Reimbursement request successfully sent.</p>`;
+            }
+            if (xhr.status === 401) {
+                // document.getElementById("displayArea").innerText = 'Request failed!';
+            }
+            if (xhr.status === 409) {
+                // document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+            }
+        }
+    }
+
+}
+
+
+function reqButtons (){
+    if(document.getElementsByClassName("Approved").length > 0){
+        console.log("process reimb reqs loaded");
+        let done = false;
+        let approveBtn = document.getElementsByClassName("Approved");
+        for (let i = 0; i<approveBtn.length; i++){
+            approveBtn[i].addEventListener("click", function(e){
+                e.preventDefault();
+                if(done === false){
+                    processReimbRequest(this.getAttribute("value"), this.getAttribute("class"), currentUserId);
+                    done = true;
+                } 
+            })
+    }
+}
+if(document.getElementsByClassName("Denied").length > 0){
+
+    let done = false;
+    let deniedBtn = document.getElementsByClassName("Denied");
+    for (let i = 0; i<deniedBtn.length; i++){
+        deniedBtn[i].addEventListener("click", function(e){
+            e.preventDefault();
+            if(done === false){
+                processReimbRequest(this.getAttribute("value"), this.getAttribute("class"), currentUserId);
+                done = true;
+            } 
+        })
+}
+}
 }
 
 

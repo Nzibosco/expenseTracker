@@ -234,4 +234,5 @@ END;
 
 COMMIT;
 
-
+--SELECT * FROM users;
+--UPDATE users SET roleId = 1 WHERE userId = 22;
