@@ -2,6 +2,8 @@ package com.reimbursement.tracker.repos;
 
 import com.reimbursement.tracker.models.Reimbursement;
 import com.reimbursement.tracker.utils.ConnectionFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.HashSet;
@@ -9,6 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class ReimbRepo implements CrudRepo <Reimbursement> {
+    private static final Logger LOGGER = LogManager.getLogger(ReimbRepo.class);
 
     @Override
     public void save(Reimbursement newObj) {
@@ -26,12 +29,15 @@ public class ReimbRepo implements CrudRepo <Reimbursement> {
             int rowsInserted = cstmt.executeUpdate();
 
             if (rowsInserted != 0) {
-                System.out.println("Reimbursement requested saved!");
+                LOGGER.info("A user with id: " + newObj.getAuthor() + " created a reimbursement request!");
+                //System.out.println("Reimbursement requested saved!");
+
             }
 
         } catch (SQLException e) {
             //e.printStackTrace();
-            System.err.println("QUERRY DENIED. TRY AGAIN");
+            LOGGER.warn(e.getMessage());
+            //System.err.println("QUERRY DENIED. TRY AGAIN");
 
         }
     }
@@ -49,8 +55,9 @@ public class ReimbRepo implements CrudRepo <Reimbursement> {
             r = mapResultSet(rs);
 
         } catch (SQLException e) {
+            LOGGER.warn(e.getMessage());
             //e.printStackTrace();
-            System.err.println("REQUEST DENIED. TRY AGAIN");
+            //System.err.println("REQUEST DENIED. TRY AGAIN");
         }
         return r;
     }
@@ -86,13 +93,15 @@ public class ReimbRepo implements CrudRepo <Reimbursement> {
             int rowsAffected = cstmt.executeUpdate();
 
             if(rowsAffected != 0){
+                LOGGER.info("A reimbursement with id "+ reimbId + " was " + decision);
                 updated = true;
                 ResultSet rs = cstmt.getGeneratedKeys();
             }
 
         } catch (SQLException e) {
             //e.printStackTrace();
-            System.err.println("PROCESS DENIED. TRY AGAIN");
+            //System.err.println("PROCESS DENIED. TRY AGAIN");
+            LOGGER.warn(e.getMessage());
         }
         return updated;
     }

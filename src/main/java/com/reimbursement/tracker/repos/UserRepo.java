@@ -3,6 +3,9 @@ package com.reimbursement.tracker.repos;
 import com.reimbursement.tracker.models.Role;
 import com.reimbursement.tracker.models.User;
 import com.reimbursement.tracker.utils.ConnectionFactory;
+import com.sun.org.apache.bcel.internal.generic.LOOKUPSWITCH;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.HashSet;
@@ -10,7 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class UserRepo implements CrudRepo<User> {
-
+    private static final Logger LOGGER = LogManager.getLogger(UserRepo.class);
 
     public Set<User> findUsersByRole(Role role) {
 
@@ -26,7 +29,8 @@ public class UserRepo implements CrudRepo<User> {
             users = mapResultSet(rs);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
 
         return users;
@@ -47,7 +51,8 @@ public class UserRepo implements CrudRepo<User> {
             user = mapResultSet(rs).stream().findFirst();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
 
         return user;
@@ -69,7 +74,8 @@ public class UserRepo implements CrudRepo<User> {
             user = mapResultSet(rs).stream().findFirst();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
 
         return user;
@@ -93,6 +99,7 @@ public class UserRepo implements CrudRepo<User> {
             int rowsInserted = pstmt.executeUpdate();
 
             if (rowsInserted != 0) {
+                LOGGER.info("A new user is created. Their lastname is " + newObj.getLname());
 
                 ResultSet rs = pstmt.getGeneratedKeys();
 
@@ -103,7 +110,8 @@ public class UserRepo implements CrudRepo<User> {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
     }
 
@@ -120,7 +128,8 @@ public class UserRepo implements CrudRepo<User> {
             users = mapResultSet(rs);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
 
         return users;
@@ -142,7 +151,9 @@ public class UserRepo implements CrudRepo<User> {
             user = mapResultSet(rs).stream().findFirst();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+
+            //e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
 
         return user;
@@ -174,6 +185,7 @@ public class UserRepo implements CrudRepo<User> {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            LOGGER.warn(e.getMessage());
         }
 
         return updateSuccessful;
@@ -198,7 +210,9 @@ public class UserRepo implements CrudRepo<User> {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+
         }
 
         return deleteSuccessful;

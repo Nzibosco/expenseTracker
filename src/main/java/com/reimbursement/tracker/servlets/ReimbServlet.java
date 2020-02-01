@@ -9,6 +9,8 @@ import com.reimbursement.tracker.models.Reimbursement;
 import com.reimbursement.tracker.models.User;
 import com.reimbursement.tracker.repos.ReimbRepo;
 import com.reimbursement.tracker.services.ReimbServices;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +29,7 @@ public class ReimbServlet extends HttpServlet {
     private final ReimbServices reimbServices = new ReimbServices(new ReimbRepo());
     //private static Reimbursement re = new Reimbursement();
     private static Set<Reimbursement> r = new HashSet<>();
-
+    private static final Logger LOGGER = LogManager.getLogger(ReimbServlet.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -46,7 +48,8 @@ public class ReimbServlet extends HttpServlet {
 
         if (req.getSession(false) != null) {
             User thisUser = (User) req.getSession().getAttribute("this-user");
-            System.out.println(thisUser);
+            LOGGER.info(thisUser);
+
         }
 
         // get reimbs by author
@@ -100,6 +103,7 @@ public class ReimbServlet extends HttpServlet {
 
             } catch (Exception e) {
                 resp.setStatus(400);
+                LOGGER.error(e.getMessage());
             }
 
         }
@@ -121,6 +125,7 @@ public class ReimbServlet extends HttpServlet {
 
             } catch (Exception e) {
                 resp.setStatus(400);
+                LOGGER.error(e.getMessage());
             }
 
         }     else {
@@ -154,11 +159,13 @@ public class ReimbServlet extends HttpServlet {
 
         } catch (MismatchedInputException e) {
             resp.setStatus(400);
+            LOGGER.warn(e.getMessage());
         } catch (AuthenticationException e) {
             resp.setStatus(401);
+            LOGGER.warn(e.getMessage());
         } catch (Exception e) {
             resp.setStatus(500);
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
     }
@@ -179,11 +186,13 @@ public class ReimbServlet extends HttpServlet {
 
         } catch (MismatchedInputException e) {
             resp.setStatus(400);
+            LOGGER.warn(e.getMessage());
         } catch (AuthenticationException e) {
             resp.setStatus(401);
+            LOGGER.warn(e.getMessage());
         } catch (Exception e) {
             resp.setStatus(500);
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
     }
 

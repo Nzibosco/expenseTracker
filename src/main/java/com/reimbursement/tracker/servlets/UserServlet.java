@@ -7,6 +7,8 @@ import com.reimbursement.tracker.exceptions.ResourcePersistenceException;
 import com.reimbursement.tracker.models.User;
 import com.reimbursement.tracker.repos.UserRepo;
 import com.reimbursement.tracker.services.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +23,7 @@ import java.util.Set;
 public class UserServlet extends HttpServlet {
 
     private final UserService userService = new UserService(new UserRepo());
+    private static final Logger LOGGER = LogManager.getLogger(UserServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,7 +34,7 @@ public class UserServlet extends HttpServlet {
 
         if (req.getSession(false) != null) {
             User thisUser = (User) req.getSession().getAttribute("this-user");
-            System.out.println(thisUser);
+            LOGGER.info("LOGGED IN USER \n" + thisUser);
         }
 
         if (userIdParam == null) {
@@ -39,6 +42,8 @@ public class UserServlet extends HttpServlet {
             Set<User> users = userService.getAllUsers();
             String usersJSON = mapper.writeValueAsString(users);
             resp.getWriter().write(usersJSON);
+            LOGGER.info("User with the following info " + (User)req.getSession().getAttribute("this-user") + "\n attempted to " +
+                    "to make a get request for all users in DB.");
 
         } else {
 
@@ -49,6 +54,7 @@ public class UserServlet extends HttpServlet {
 
             } catch (Exception e) {
                 resp.setStatus(400);
+                LOGGER.warn(e.getMessage());
             }
 
         }
@@ -71,13 +77,16 @@ public class UserServlet extends HttpServlet {
 
         } catch (MismatchedInputException e) {
             resp.setStatus(400); // bad request
+            LOGGER.warn(e.getMessage());
         } catch (ResourcePersistenceException e) {
             resp.setStatus(409); // conflict
             ErrorResponse err = new ErrorResponse(409, System.currentTimeMillis());
             err.setMessage(e.getMessage());
+            LOGGER.warn(err.getMessage());
             writer.write(mapper.writeValueAsString(err));
         } catch (Exception e) {
             resp.setStatus(500); // internal server error
+            LOGGER.error(e.getMessage());
         }
 
     }
