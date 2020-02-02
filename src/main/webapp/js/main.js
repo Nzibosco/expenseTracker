@@ -8,6 +8,7 @@ window.onload = () => {
 // global variables to be referenced later; 
 let currentUserId;
 let currentUserRole;
+let userData = {};
 
 // register a new user
 function register() {
@@ -362,6 +363,8 @@ function displayReimbs(resp) {
     displayArea.append(reqdetails);
 
     for (let i = 0; i < resp.length; i++) {
+        //getUser(resp[i].resolver);
+
         console.log(resp[i]);
         let reimbHtml = document.createElement("div");
         let reqData = `
@@ -370,7 +373,9 @@ function displayReimbs(resp) {
        <ol style = "list-style-type: none;">
         <li><b>Request id: </b>${resp[i].reimbId}</li>
         <li><b>Date requested: </b>${resp[i].submittedOn.substring(0, 16)}</li>
-        ${resp[i].resolvedOn != null ? `<li><b>Resolved On: </b>${resp[i].resolvedOn.substring(0, 16)}</li> <li><b>Resolver Id: </b>${resp[i].resolver}</li>` : ""}
+        ${resp[i].resolvedOn != null ? `<li><b>Resolved On: </b>${resp[i].resolvedOn.substring(0, 16)}</li> 
+        <li><b>Resolver Id: </b> ${resp[i].resolver} </li>` : ""}
+        <div id="${resp[i].resolver}"></div>
         <li><b>Details: </b>${resp[i].description}</li>
         <li><b>Amount: </b>${resp[i].amount}</li>
         <li><b>Status: </b><span style = "color: red">${resp[i].statusId === 1 ? " Pending" : resp[i].statusId === 2 ? "Approved" : "Denied"}</span></li>
@@ -383,8 +388,6 @@ function displayReimbs(resp) {
         reqdetails.append(reimbHtml);
     }
     reqButtons();
-
-
 }
 
 // sort employee specific reimbs querries 
@@ -529,4 +532,46 @@ function isEmail(string) {
 
 // more tasks....
 // - pop up user info when author or resolver id is clicked. 
+
+//get request for a user id
+function getUser(id) {
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "users/?userId="+id, true);
+    xhr.send();
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let response = xhr.responseText;
+                let resp = JSON.parse(response);
+                //console.log(resp);
+                // displayReimbs(resp);
+                let userDetails = `
+                 <li>Full names: ${resp.fname + " " + resp.lname}</li>
+                <li>Email: ${resp.email}</li>
+                `;
+                let list = document.createElement("ul");
+                list.innerHTML = userDetails;
+
+                document.getElementById(id).append(list);
+                //userData = {};
+                //userData = resp;
+                console.log(resp);
+                //setUserDetails(resp);
+            }
+            if (xhr.status === 401) {
+                //document.getElementById("displayArea").innerText = 'Request failed!';
+            }
+            if (xhr.status === 409) {
+                //document.getElementById('displayArea').innerText = 'Request could not be sent. Try again';
+            }
+            if (xhr.status === 500) {
+                //document.getElementById('displayArea').innerText = 'An error occurred. Try again';
+            }
+        }
+    }
+
+}
+
 
