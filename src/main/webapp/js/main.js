@@ -2,7 +2,7 @@ window.onload = () => {
 
     document.getElementById("login").addEventListener("click", login);
     document.getElementById("register").addEventListener("click", register);
-    
+
 }
 
 // global variables to be referenced later; 
@@ -21,82 +21,82 @@ function register() {
     // console.log(roleId);
 
     // input validation
-    if(firstname.trim() === "" || lastname.trim() ==="" || uname=== null || e.trim() ==="" || pw.trim() ==="" || uname.trim() === ""){
-        document.getElementById('register-failed').innerText ="";
-        document.getElementById('register-failed').innerText = "All form fields must be filled";
-    } else if(firstname.length < 2 || lastname.length < 2){
+    if (firstname.trim() === "" || lastname.trim() === "" || uname === null || e.trim() === "" || pw.trim() === "" || uname.trim() === "") {
         document.getElementById('register-failed').innerText = "";
-        document.getElementById('register-failed').innerText =  "Names must be 2 or more characters long";
-    } else if(isNaN(firstname) === false || isNaN(lastname) === false){
-        document.getElementById('register-failed').innerText ="";
+        document.getElementById('register-failed').innerText = "All form fields must be filled";
+    } else if (firstname.length < 2 || lastname.length < 2) {
+        document.getElementById('register-failed').innerText = "";
+        document.getElementById('register-failed').innerText = "Names must be 2 or more characters long";
+    } else if (isNaN(firstname) === false || isNaN(lastname) === false) {
+        document.getElementById('register-failed').innerText = "";
         document.getElementById('register-failed').innerText = "Names should be in string format";
-    } else if(isEmail(e) === false){
-        document.getElementById('register-failed').innerText ="";
+    } else if (isEmail(e) === false) {
+        document.getElementById('register-failed').innerText = "";
         document.getElementById('register-failed').innerText = "Invalid email";
-    } else{
+    } else {
 
-    let user = {
-        fname: firstname,
-        lname: lastname,
-        email: e,
-        username: uname,
-        password: pw,
-        roleId: 2
-    }
+        let user = {
+            fname: firstname,
+            lname: lastname,
+            email: e,
+            username: uname,
+            password: pw,
+            roleId: 2
+        }
 
-    let userJSON = JSON.stringify(user);
+        let userJSON = JSON.stringify(user);
 
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "users", true);
-    xhr.send(userJSON);
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "users", true);
+        xhr.send(userJSON);
 
-    // clear the form
-    document.getElementById("fname").value = "";
-    document.getElementById("lname").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("uname").value = "";
-    document.getElementById("pw").value = "";
-    // document.getElementById("select-role").options[0];
+        // clear the form
+        document.getElementById("fname").value = "";
+        document.getElementById("lname").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("uname").value = "";
+        document.getElementById("pw").value = "";
+        // document.getElementById("select-role").options[0];
 
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                document.getElementById('register-failed').innerText ="";
-                console.log(userJSON);
-                document.getElementById("model-body").innerHTML = "";
-                document.getElementById("register-modelTitle").innerHTML = "";
-                document.getElementById("model-body").innerHTML = "Register successfull! ";
-                let callLogin = document.getElementById("model-body");
-                let loginModal = document.createElement("a");
-                loginModal.setAttribute("href", "#");
-                loginModal.setAttribute("id", "call-login");
-                loginModal.setAttribute("data-toggle", "modal");
-                loginModal.setAttribute("data-target", "#login-model");
-                loginModal.innerText = "Click to continue with login";
-                callLogin.appendChild(loginModal);
-                document.getElementById("call-login").addEventListener("click", closeRegistermodel);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    document.getElementById('register-failed').innerText = "";
+                    console.log(userJSON);
+                    document.getElementById("model-body").innerHTML = "";
+                    document.getElementById("register-modelTitle").innerHTML = "";
+                    document.getElementById("model-body").innerHTML = "Register successfull! ";
+                    let callLogin = document.getElementById("model-body");
+                    let loginModal = document.createElement("a");
+                    loginModal.setAttribute("href", "#");
+                    loginModal.setAttribute("id", "call-login");
+                    loginModal.setAttribute("data-toggle", "modal");
+                    loginModal.setAttribute("data-target", "#login-model");
+                    loginModal.innerText = "Click to continue with login";
+                    callLogin.appendChild(loginModal);
+                    document.getElementById("call-login").addEventListener("click", closeRegistermodel);
 
-                function closeRegistermodel() {
-                    setTimeout(() => {
-                        document.getElementById("register-model").click();
-                    }, 10);
+                    function closeRegistermodel() {
+                        setTimeout(() => {
+                            document.getElementById("register-model").click();
+                        }, 10);
+                    }
                 }
-            }
-            if (xhr.status === 401) {
-                document.getElementById('register-failed').innerText ="";
-                document.getElementById('register-failed').innerText = 'registration failed!';
-            }
-            if (xhr.status === 409) {
-                document.getElementById('register-failed').innerText ="";
-                document.getElementById('register-failed').innerText = 'Username already taken!';
-            }
-            if (xhr.status === 500) {
-                document.getElementById('register-failed').innerText ="";
-                document.getElementById('register-failed').innerText = 'An error occurred. Try again later';
+                if (xhr.status === 401) {
+                    document.getElementById('register-failed').innerText = "";
+                    document.getElementById('register-failed').innerText = 'registration failed!';
+                }
+                if (xhr.status === 409) {
+                    document.getElementById('register-failed').innerText = "";
+                    document.getElementById('register-failed').innerText = 'Username already taken!';
+                }
+                if (xhr.status === 500) {
+                    document.getElementById('register-failed').innerText = "";
+                    document.getElementById('register-failed').innerText = 'An error occurred. Try again later';
+                }
             }
         }
     }
-}
 }
 
 
@@ -105,76 +105,83 @@ function login() {
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
 
-    let creds = {
-        username: username,
-        password: password
-    };
+    if (username === null || password === null || username === "" || password === "") {
+        document.getElementById('login-failed').innerText = '';
+        document.getElementById('login-failed').innerText = 'All form fields must be filled';
+    } else {
+        let creds = {
+            username: username,
+            password: password
+        };
 
-    let credJSON = JSON.stringify(creds);
+        let credJSON = JSON.stringify(creds);
 
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'auth', true);
-    xhr.send(credJSON);
-    //clear the form field
-    document.getElementById("username").value = "";
-    document.getElementById("password").value = "";
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                document.getElementById("login-model").click();
-                document.getElementById("profile-info").innerHTML = "";
-                let user = JSON.parse(xhr.responseText);
-                let fullName = user.fname + " " + user.lname;
-                console.log(user);
-                currentUserId = user.userId;
-                currentUserRole = user.roleId;
-                console.log(`current user id is: ${currentUserId} and the role id is: ${currentUserRole}`);
-                dashboardDisplay(fullName);
-                loadDashboard();
-                document.getElementById("logout").addEventListener("click", logout);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'auth', true);
+        xhr.send(credJSON);
+        //clear the form field
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    document.getElementById("login-model").click();
+                    document.getElementById("profile-info").innerHTML = "";
+                    let user = JSON.parse(xhr.responseText);
+                    let fullName = user.fname + " " + user.lname;
+                    console.log(user);
+                    currentUserId = user.userId;
+                    currentUserRole = user.roleId;
+                    console.log(`current user id is: ${currentUserId} and the role id is: ${currentUserRole}`);
+                    dashboardDisplay(fullName);
+                    loadDashboard();
+                    document.getElementById("logout").addEventListener("click", logout);
 
 
-                setTimeout(() => {
-                    let reimbQuerryString = "reimbs";
-                    let userReimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
-                    document.getElementById('view-reimbs').addEventListener('click', function () {
-                        allReimbs(reimbQuerryString, userReimbQuerryString);
-                    });
+                    setTimeout(() => {
+                        let reimbQuerryString = "reimbs";
+                        let userReimbQuerryString = `reimbs/?reimbAuth=${currentUserId}`;
+                        document.getElementById('view-reimbs').addEventListener('click', function () {
+                            allReimbs(reimbQuerryString, userReimbQuerryString);
+                        });
 
-                    //Pending status reimbs
-                    let pendingReimbQuerryString = "reimbs/?reimbStatus=1";
-                    document.getElementById('view-pending').addEventListener('click', function () {
-                        querryReimbs(pendingReimbQuerryString, userReimbQuerryString, "pending")
-                    });
+                        //Pending status reimbs
+                        let pendingReimbQuerryString = "reimbs/?reimbStatus=1";
+                        document.getElementById('view-pending').addEventListener('click', function () {
+                            querryReimbs(pendingReimbQuerryString, userReimbQuerryString, "pending")
+                        });
 
-                    //Approved status reimbs
-                    let approvedReimbQuerryString = "reimbs/?reimbStatus=2";
-                    document.getElementById('view-approved').addEventListener('click', function () {
-                        querryReimbs(approvedReimbQuerryString, userReimbQuerryString, "approved")
-                    });
+                        //Approved status reimbs
+                        let approvedReimbQuerryString = "reimbs/?reimbStatus=2";
+                        document.getElementById('view-approved').addEventListener('click', function () {
+                            querryReimbs(approvedReimbQuerryString, userReimbQuerryString, "approved")
+                        });
 
-                    //Denied status reimbs
-                    let deniedReimbQuerryString = "reimbs/?reimbStatus=3";
-                    document.getElementById('view-denied').addEventListener('click', function () {
-                        querryReimbs(deniedReimbQuerryString, userReimbQuerryString, "denied")
-                    });
-                }, 500);
+                        //Denied status reimbs
+                        let deniedReimbQuerryString = "reimbs/?reimbStatus=3";
+                        document.getElementById('view-denied').addEventListener('click', function () {
+                            querryReimbs(deniedReimbQuerryString, userReimbQuerryString, "denied")
+                        });
+                    }, 500);
 
-                function allReimbs(managerSpec, userSpec) {
-                    if (currentUserRole == 3) { getMyReimbs(managerSpec) } else { getMyReimbs(userSpec) }
+                    function allReimbs(managerSpec, userSpec) {
+                        if (currentUserRole == 3) { getMyReimbs(managerSpec) } else { getMyReimbs(userSpec) }
+                    }
+
+                    function querryReimbs(managerSpec, userSpec, criteria) {
+                        if (currentUserRole === 3) { getMyReimbs(managerSpec) } else { getSortedReimbs(userSpec, criteria) }
+                    }
+
+
                 }
-
-                function querryReimbs(managerSpec, userSpec, criteria) {
-                    if (currentUserRole === 3) { getMyReimbs(managerSpec) } else { getSortedReimbs(userSpec, criteria) }
+                if (xhr.status === 401) {
+                    document.getElementById('login-failed').innerText = '';
+                    document.getElementById('login-failed').innerText = 'Login failed!';
                 }
-
-
-            }
-            if (xhr.status === 401) {
-                document.getElementById('login-failed').innerText = 'Login failed!';
-            }
-            if (xhr.status === 500) {
-                document.getElementById('login-failed').innerText = 'An error occurred. Try again later';
+                if (xhr.status === 500) {
+                    document.getElementById('login-failed').innerText = '';
+                    document.getElementById('login-failed').innerText = 'An error occurred. Try again later';
+                }
             }
         }
     }
@@ -265,44 +272,44 @@ function sendReimbReq() {
 
     let type = getType.options[getType.selectedIndex].getAttribute("value");
 
-    if(amount < 1 || description.trim() === null || description.trim() === "" || type === null || type === ""){
+    if (amount < 1 || description.trim() === null || description.trim() === "" || type === null || type === "") {
 
         document.getElementById("invalid-input").innerHTML = "Invalid Input. Try again with valid input";
     } else {
 
-    let reimbCreds = {
-        amount: amount,
-        description: description,
-        author: currentUserId,
-        typeId: type
-    };
+        let reimbCreds = {
+            amount: amount,
+            description: description,
+            author: currentUserId,
+            typeId: type
+        };
 
-    let reimbJSON = JSON.stringify(reimbCreds);
+        let reimbJSON = JSON.stringify(reimbCreds);
 
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "reimbs", true);
-    xhr.send(reimbJSON);
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "reimbs", true);
+        xhr.send(reimbJSON);
 
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                console.log(reimbJSON);
-                console.log(reimbJSON.amount);
-                document.getElementById("displayArea").innerHTML = "";
-                document.getElementById("displayArea").innerHTML = "Reimbursement request successfully sent.";
-            }
-            if (xhr.status === 401) {
-                document.getElementById("displayArea").innerText = "Request failed!";
-            }
-            if (xhr.status === 409) {
-                document.getElementById('displayArea').innerText = "Request could not be sent. Try again";
-            }
-            if (xhr.status === 500) {
-                document.getElementById('displayArea').innerText = "Request could not be sent. Try again";
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(reimbJSON);
+                    console.log(reimbJSON.amount);
+                    document.getElementById("displayArea").innerHTML = "";
+                    document.getElementById("displayArea").innerHTML = "Reimbursement request successfully sent.";
+                }
+                if (xhr.status === 401) {
+                    document.getElementById("displayArea").innerText = "Request failed!";
+                }
+                if (xhr.status === 409) {
+                    document.getElementById('displayArea').innerText = "Request could not be sent. Try again";
+                }
+                if (xhr.status === 500) {
+                    document.getElementById('displayArea').innerText = "Request could not be sent. Try again";
+                }
             }
         }
     }
-}
 }
 
 
@@ -513,7 +520,7 @@ function reqButtons() {
 
 // html forms input validation
 // validating email
-function isEmail(string){
+function isEmail(string) {
     let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     let email = string;
     let check = mailformat.test(email);
