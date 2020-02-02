@@ -372,6 +372,7 @@ function displayReimbs(resp) {
        <div class = "card-body">
        <ol style = "list-style-type: none;">
         <li><b>Request id: </b>${resp[i].reimbId}</li>
+        <li><b>Requestor Id: </b> ${resp[i].author}</li>
         <li><b>Date requested: </b>${resp[i].submittedOn.substring(0, 16)}</li>
         ${resp[i].resolvedOn != null ? `<li><b>Resolved On: </b>${resp[i].resolvedOn.substring(0, 16)}</li> 
         <li><b>Resolver Id: </b> ${resp[i].resolver} </li>` : ""}
