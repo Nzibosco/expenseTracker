@@ -53,7 +53,7 @@ public class ReimbServices {
     }
 
     // method to validate and format amount deposited or withdrawn
-    private Double validatedAmount (Double amount){
+    public Double validatedAmount (Double amount){
         if(amount.isNaN() || amount < 0) return 0.0;
 
         try{
@@ -66,11 +66,11 @@ public class ReimbServices {
         return amount;
     }
 
-    private boolean negativeValuesChecker(Double amount){
+    public boolean negativeValuesChecker(Double amount){
         return amount <= 0;
     }
 
-    private Boolean isReimbValid(Reimbursement reimb) {
+    public Boolean isReimbValid(Reimbursement reimb) {
         Double amount = reimb.getAmount();
         Double authorId = Double.valueOf(reimb.getAuthor());
         if (reimb == null) return false;
