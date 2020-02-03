@@ -2,77 +2,9 @@ package com.reimbursement.tracker;
 
 
 public class AppDriver {
-    //public static Reimbursement r = new Reimbursement();
 
     public static void main (String ... args){
-//        try(Connection conn = getInstance().getConnection()){
-////
-////            String sql = "SELECT * FROM users";
-////            Statement pstmt = conn.createStatement();
-////
-////            ResultSet rs = pstmt.executeQuery(sql);
-////            while(rs.next()){
-////                System.out.println("User id: " + rs.getInt(1));
-////                System.out.println("email: " + rs.getString(4));
-////            }
-////
-////        }catch (SQLException e){
-////            e.printStackTrace();
-//////        }
-//////
-//        try{
-////            Reimbursement r = new Reimbursement();
-////            r.setAmount(210);
-////            r.setDescription("give me my money nooooow!!!");
-////            r.setAuthor(1);
-////            r.setTypeId(1);
-//            ReimbRepo repo = new ReimbRepo();
-////            UserService us = new UserService(new UserRepo());
-//////            repo.findAll();
-////            Set<Reimbursement> rs = repo.findAll();
-////            Set<User> users = new HashSet<>();
-////            rs.stream().forEach(reimbursement -> {
-////
-////                if(reimbursement.getStatusId() == Status.DENIED.getStatusId()) {
-////                    //String lname = us.getUserById(reimbursement.getResolver()).getLname();
-////                    //User u = us.getUserById(reimbursement.getResolver());
-////                    User u = us.getUserById(reimbursement.getResolver());
-////                    users.add(u);
-////                    //System.out.println(reimbursement.getResolver());
-////
-////                    }
-////            });
-////
-////            users.stream().forEach(user -> System.out.println(user.getLname()));
-////            repo.processRequest(22, "Approved", 2);
-//            ReimbServices reimbServices = new ReimbServices(new ReimbRepo());
-//
-////            r.setAmount(149.8907);
-////            r.setDescription("That's all for today! I wanna be rich. hahah. Who cares");
-////            r.setAuthor(2);
-////            r.setTypeId(4);
-////            rs.registerReimb(r);
-//
-//            //rs.processReimb(26, "", 2);
-//            reimbServices.getAllReimbs().forEach(reimbursement -> {
-//                if (reimbursement.getReimbId() == Integer.parseInt("1")){
-//                    Reimbursement  rb = reimbursement;
-//                    r = rb;
-//                    //System.out.println(r);
-//                }
-//            });
-//            System.out.println(r);
-//
-//            //System.out.println(repo.findAll().size());
-//            //UserService us = new UserService(new UserRepo());
-//            //System.out.println(us.getAllUsers().size());
-//
-//
-//
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+
         System.out.println("Application is running!!");
 }
 
